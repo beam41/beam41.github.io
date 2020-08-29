@@ -31,9 +31,14 @@ module.exports = {
       resolve: `gatsby-plugin-sass`,
       options: {
         implementation: require('sass'),
+        postCssPlugins: [
+          require('tailwindcss'),
+          require('./tailwind.config.js'),
+        ],
       },
     },
     `gatsby-plugin-mini-css-class-name`,
+    `gatsby-plugin-preact`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

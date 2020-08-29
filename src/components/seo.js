@@ -25,6 +25,9 @@ function SEO({ description, lang, meta, title }) {
       htmlAttributes={{
         lang,
       }}
+      bodyAttributes={{
+        class: 'bg-cover bg-fixed bg-no-repeat',
+      }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
       meta={[
