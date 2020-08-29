@@ -1,19 +1,18 @@
 @use "sass:color";
 @use './color' as c;
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 body {
-  margin: 0;
   background: c.$bg;
   background: radial-gradient(
     circle at top left,
     color.adjust(c.$bg, $lightness: 7%) 0px,
     c.$bg 90vmax
   );
-  background: {
-    size: 100% 100vh;
-    repeat: no-repeat;
-    attachment: fixed;
-  }
   font-family: 'Crimson Text', serif;
   color: c.$text;
   height: 1000vh;
