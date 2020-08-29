@@ -19,15 +19,3 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
     })
   }
 }
-
-exports.onCreatePage = ({ page, actions }) => {
-  const { createPage, deletePage } = actions
-  deletePage(page)
-  createPage({
-    ...page,
-    context: {
-      ...page.context,
-      subPage: page.path !== '/',
-    },
-  })
-}

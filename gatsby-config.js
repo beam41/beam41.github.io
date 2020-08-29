@@ -21,7 +21,7 @@ module.exports = {
         name: `Phumdol Portfolio`,
         short_name: `Phumdol`,
         start_url: `/`,
-        background_color: `#ffffff`,
+        background_color: `#ffebcf`,
         theme_color: `#242424`,
         display: `minimal-ui`,
         icon: `src/images/icon.png`,
@@ -33,8 +33,6 @@ module.exports = {
         implementation: require('sass'),
       },
     },
-    `gatsby-plugin-layout`,
-    `gatsby-plugin-dark-mode`,
     `gatsby-plugin-mini-css-class-name`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline

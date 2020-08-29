@@ -1,12 +1,11 @@
-@use "../styles/flexbox";
-
 .not-found {
-  @extend %d-flex--c;
+  display: flex;
+  align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
   height: 80vh;
 
-  h2 {
+  h1 {
     font-size: 40rem;
     margin: 10px;
     color: gray;
