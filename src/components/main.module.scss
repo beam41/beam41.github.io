@@ -38,3 +38,15 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .main-container {
+    padding: 128px 64px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .main-container {
+    padding: 128px 8px;
+  }
+}
