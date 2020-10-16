@@ -1,19 +1,20 @@
 @use "sass:color";
-@use './color' as c;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+* {
+  box-sizing: border-box;
+}
 
 body {
-  background: c.$bg;
-  background: radial-gradient(
-    circle at top left,
-    color.adjust(c.$bg, $lightness: 7%) 0px,
-    c.$bg 90vmax
-  );
-  font-family: 'Crimson Text', serif;
-  color: c.$text;
-  height: 1000vh;
+  margin: 0;
+  font-family: 'Josefin Sans', sans-serif;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    color: color.adjust(white, $lightness: -25%);
+  }
 }

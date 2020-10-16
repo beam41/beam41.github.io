@@ -1,0 +1,40 @@
+@use "sass:color";
+
+.main-container {
+  padding: 128px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .head {
+    margin-top: 0;
+    font-size: 2rem;
+  }
+
+  .skill-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em -16px;
+    max-width: 400px;
+
+    .skill-item {
+      padding: 0 16px 16px;
+    }
+
+    .skill-pill {
+      display: block;
+      padding: 8px 16px;
+      background-color: white;
+      border-radius: 99px;
+      color: black;
+      mix-blend-mode: screen;
+
+      &:hover {
+        background-color: color.adjust(white, $lightness: -25%);
+      }
+    }
+  }
+}

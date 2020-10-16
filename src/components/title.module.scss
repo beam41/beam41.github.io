@@ -1,6 +1,0 @@
-@use "sass:color";
-@use "../styles/color" as c;
-
-.sub-title {
-    color: color.mix(c.$text, c.$bg, $weight: 75%);
-}
