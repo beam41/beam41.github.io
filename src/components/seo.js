@@ -26,7 +26,7 @@ function SEO({ description, lang, meta, title }) {
         lang,
       }}
       bodyAttributes={{
-        class: 'bg-cover bg-fixed bg-no-repeat',
+        class: 'bg-cover bg-fixed bg-no-repeat font-body text-main',
       }}
       title={title}
       titleTemplate={`%s | ${site.siteMetadata.title}`}
@@ -66,7 +66,7 @@ function SEO({ description, lang, meta, title }) {
       ].concat(meta)}
     >
       <link
-        href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap"
         rel="stylesheet"
       />
     </Helmet>
