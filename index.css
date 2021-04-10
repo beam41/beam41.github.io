@@ -6,6 +6,7 @@ body {
 .big-title {
   margin: 0;
   display: flex;
+  height: 100vh;
 }
 
 .big-title .the-name {
@@ -63,6 +64,52 @@ body {
   font-size: 14vmin;
 }
 
-.full {
-  height: 100vh;
+.block {
+  padding: 32px;
+}
+
+.block h2 {
+  text-align: center;
+  font-size: 32px;
+}
+
+.skill-box {
+  border-radius: 4px;
+  display: flex;
+  margin: 16px auto;
+  max-width: 600px;
+}
+
+.skill-box.js {
+  box-shadow: 0px 0px 0px 1px #fcdc00, 5px 5px 0px 0px #fcdc00;
+}
+
+.skill-box.html {
+  box-shadow: 0px 0px 0px 1px #f06529, 5px 5px 0px 0px #f06529;
+}
+
+.skill-box.cs {
+  box-shadow: 0px 0px 0px 1px #05930c, 5px 5px 0px 0px #05930c;
+}
+
+.skill-box.python {
+  box-shadow: 0px 0px 0px 1px #347ab4, 5px 5px 0px 0px #347ab4;
+}
+
+.skill-box.cpp {
+  box-shadow: 0px 0px 0px 1px #00599c, 5px 5px 0px 0px #00599c;
+}
+
+.skill-box .img-cover {
+  display: flex;
+  align-items: center;
+}
+
+.skill-box img {
+  height: 150px;
+  width: 150px;
+}
+
+.skill-box .txt {
+  padding: 16px;
 }
