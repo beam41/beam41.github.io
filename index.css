@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.big-title {
+  margin: 0;
+  display: flex;
+}
+
+.big-title .the-name {
+  display: grid;
+  width: 90vw;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.big-title .the-name > span {
+  font-size: 30vmin;
+}
+
+.big-title .the-name > span:nth-child(1)::selection {
+  background: violet;
+}
+.big-title .the-name > span:nth-child(2)::selection {
+  background: indigo;
+}
+.big-title .the-name > span:nth-child(3)::selection {
+  background: blue;
+}
+.big-title .the-name > span:nth-child(4)::selection {
+  background: green;
+}
+.big-title .the-name > span:nth-child(5)::selection {
+  background: yellow;
+}
+.big-title .the-name > span:nth-child(6)::selection {
+  background: orange;
+}
+.big-title .the-name > span:nth-child(7)::selection {
+  background: red;
+}
+
+.big-title .the-name .the-empty {
+  --pos: 0%;
+  font-weight: normal;
+  user-select: none;
+  color: white;
+  font-size: 16px;
+  grid-column: span 2;
+  align-self: center;
+  text-align: end;
+  background: linear-gradient(black 0 0) 0 100% / var(--pos, 0) no-repeat;
+  transition: 0.25s;
+}
+
+.big-title .the-name .the-empty:hover {
+  --pos: 100%;
+}
+
+.big-title .the-lastname {
+  writing-mode: vertical-lr;
+  font-size: 14vmin;
+}
+
+.full {
+  height: 100vh;
+}
