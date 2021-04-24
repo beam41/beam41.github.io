@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: "Josefin Sans", sans-serif;
+  color: rgba(0, 0, 0, 0.85);
 }
 
 .big-title {
@@ -14,32 +15,38 @@ body {
   width: 90vw;
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr;
+  font-weight: bold;
+  color: black;
 }
 
 .big-title .the-name > span {
   font-size: 30vmin;
 }
 
-.big-title .the-name > span:nth-child(1)::selection {
-  background: violet;
+.big-title .the-name > span:not(.the-empty)::first-letter {
+  background: var(--bg-color);
 }
-.big-title .the-name > span:nth-child(2)::selection {
-  background: indigo;
+
+.big-title .the-name > span:nth-child(1) {
+  --bg-color: violet;
 }
-.big-title .the-name > span:nth-child(3)::selection {
-  background: blue;
+.big-title .the-name > span:nth-child(2) {
+  --bg-color: indigo;
 }
-.big-title .the-name > span:nth-child(4)::selection {
-  background: green;
+.big-title .the-name > span:nth-child(3) {
+  --bg-color: blue;
 }
-.big-title .the-name > span:nth-child(5)::selection {
-  background: yellow;
+.big-title .the-name > span:nth-child(4) {
+  --bg-color: green;
 }
-.big-title .the-name > span:nth-child(6)::selection {
-  background: orange;
+.big-title .the-name > span:nth-child(5) {
+  --bg-color: yellow;
 }
-.big-title .the-name > span:nth-child(7)::selection {
-  background: red;
+.big-title .the-name > span:nth-child(6) {
+  --bg-color: orange;
+}
+.big-title .the-name > span:nth-child(7) {
+  --bg-color: red;
 }
 
 .big-title .the-name .the-empty {
@@ -68,48 +75,44 @@ body {
   padding: 32px;
 }
 
-.block h2 {
+.info-block {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.info-section {
   text-align: center;
-  font-size: 32px;
 }
 
-.skill-box {
-  border-radius: 4px;
-  display: flex;
-  margin: 16px auto;
-  max-width: 600px;
+.info-head {
+  margin-top: 0;
 }
 
-.skill-box.js {
-  box-shadow: 0px 0px 0px 1px #fcdc00, 5px 5px 0px 0px #fcdc00;
+.info-data {
+  margin: 0;
 }
 
-.skill-box.html {
-  box-shadow: 0px 0px 0px 1px #f06529, 5px 5px 0px 0px #f06529;
+.skill-img-group {
+  text-align: center;
 }
 
-.skill-box.cs {
-  box-shadow: 0px 0px 0px 1px #05930c, 5px 5px 0px 0px #05930c;
+.foot {
+  text-align: center;
 }
 
-.skill-box.python {
-  box-shadow: 0px 0px 0px 1px #347ab4, 5px 5px 0px 0px #347ab4;
+.foot > .ico-credit,
+.ico-credit .ico-by,
+.contact > a {
+  color: rgba(0, 0, 0, 0.7);
 }
 
-.skill-box.cpp {
-  box-shadow: 0px 0px 0px 1px #00599c, 5px 5px 0px 0px #00599c;
+.contact > a:hover,
+.ico-by:hover {
+  color: rgba(0, 0, 0, 0.9);
 }
 
-.skill-box .img-cover {
-  display: flex;
-  align-items: center;
-}
-
-.skill-box img {
-  height: 150px;
-  width: 150px;
-}
-
-.skill-box .txt {
-  padding: 16px;
+.ico-by > svg {
+  transform: translateY(1px);
 }
