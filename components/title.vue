@@ -32,5 +32,11 @@
 .flex {
   display: flex;
   border: 8px solid white;
+
+  &:before, &:after {
+    content: '';
+    flex: 1;
+    background: white;
+  }
 }
 </style>
