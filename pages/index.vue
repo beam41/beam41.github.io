@@ -9,7 +9,7 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-@use "../assets/styles/color";
+@use "~assets/styles/color";
 
 .main {
   height: 100vh;

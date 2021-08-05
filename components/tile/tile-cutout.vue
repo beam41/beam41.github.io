@@ -5,15 +5,18 @@
 </template>
 
 <style lang="scss" scoped>
+@use "~assets/styles/color";
 .cutout {
-  width: 100px;
-  height: 50px;
+  box-sizing: border-box;
+  width: 150px;
+  height: 90px;
   overflow: hidden;
-  border: 8px solid white;
+  border: 8px solid color.$bg;
+  flex-shrink: 0;
 
   .cutout-inner {
     height: 100%;
-    border: 16px solid white;
+    border: 16px solid color.$bg;
     border-radius: 30px;
     margin: -16px;
   }
