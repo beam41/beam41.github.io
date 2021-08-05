@@ -1,13 +1,15 @@
 export const state = () => ({
   screenWidth: 0,
-  tileWidth: 0
+  tileHeight: 300,
+  tileWidth: 485,
 })
 
+const FOOTER_HEIGHT = 64
+
 export const mutations = {
-  initScreenWidth(_state) {
+  init(_state) {
     _state.screenWidth = window.innerWidth
-  },
-  initTileWidth(_state, width) {
-    _state.tileWidth = width
+    _state.tileHeight = Math.round((window.innerHeight - FOOTER_HEIGHT) / 3)
+    _state.tileWidth = Math.round(_state.tileHeight * 1.618)
   },
 }

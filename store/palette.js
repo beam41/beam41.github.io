@@ -1,6 +1,6 @@
 import { randomInt } from '@/util/random'
 
-const palette = [
+const PALETTE = [
   ['B97A95', 'F6AE99', 'F2E1C1'],
   ['DEEDF0', 'F4C7AB', 'B2B8A3'],
   ['7B6079', 'A7D0CD', 'FFE9D6'],
@@ -14,6 +14,6 @@ export const state = () => ({
 
 export const mutations = {
   init(_state) {
-    _state.currPalette = palette[randomInt(0, palette.length - 1)]
+    _state.currPalette = PALETTE[randomInt(0, PALETTE.length - 1)]
   },
 }

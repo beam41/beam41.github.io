@@ -5,9 +5,18 @@
 </template>
 
 <script>
+import { debounce } from '@/util/debounce'
 export default {
   created() {
-    this.$store.commit('screen/initScreenWidth')
+    this.$store.commit('screen/init')
+  },
+  mounted() {
+    window.addEventListener(
+      'resize',
+      debounce(() => {
+        this.$store.commit('screen/init')
+      })
+    )
   },
 }
 </script>

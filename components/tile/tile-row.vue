@@ -37,9 +37,12 @@ export default {
     offset(to) {
       this.$emit('offsetChange', to)
     },
-    tileRowWidthScrollable(to) {
-      const randomRange = to / 4
-      this.offset = this.center + randomInt(-randomRange, randomRange)
+    tileRowWidthScrollable: {
+      immediate: true,
+      handler(to) {
+        const randomRange = to / 4
+        this.offset = this.center + randomInt(-randomRange, randomRange)
+      },
     },
   },
 }

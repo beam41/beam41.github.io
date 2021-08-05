@@ -1,14 +1,23 @@
 <template>
-  <div ref="tile" class="cutout">
+  <div
+    ref="tile"
+    class="cutout"
+    :style="{
+      width: screen.tileWidth + 'px',
+      height: screen.tileHeight + 'px',
+    }"
+  >
     <div class="cutout-inner"></div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  mounted() {
-    const tileWidth = this.$refs.tile.clientWidth
-    this.$store.commit('screen/initTileWidth', tileWidth + 16)
+  computed: {
+    ...mapState({
+      screen: (store) => store.screen,
+    }),
   },
 }
 </script>
@@ -18,8 +27,6 @@ export default {
 
 .cutout {
   box-sizing: border-box;
-  width: tile-size.$width;
-  height: tile-size.$height;
   overflow: hidden;
   border: 8px solid color.$bg;
   flex-shrink: 0;

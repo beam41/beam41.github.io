@@ -1,5 +1,12 @@
 <template>
-  <div class="bg" :style="{ background: '#' + palette[pal] }"></div>
+  <div
+    class="bg"
+    :style="{
+      background: '#' + palette[pal],
+      width: screen.tileWidth + 'px',
+      height: screen.tileHeight + 'px',
+    }"
+  ></div>
 </template>
 
 <script>
@@ -13,6 +20,7 @@ export default {
   computed: {
     ...mapState({
       palette: (store) => store.palette.currPalette,
+      screen: (store) => store.screen,
     }),
   },
   mounted() {
@@ -22,10 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "./tile-size.scss";
 .bg {
-  width: tile-size.$width;
-  height: tile-size.$height;
   flex-shrink: 0;
 }
 </style>
