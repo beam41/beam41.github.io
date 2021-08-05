@@ -1,41 +1,42 @@
 <template>
-  <div class="center">
-    <div class="title-cover">
-      <div class="bg">
-        <TileRowBg :count="5" :offset="269" />
-        <TileRowBg :count="6" :offset="342" />
-        <TileRowBg :count="10" :offset="400" />
-        <TileRowBg :count="8" :offset="243" />
-      </div>
-      <div class="title">Phumdol</div>
-      <div class="fg">
-        <TileRow :count="5" :offset="269" />
-        <TileRow :count="6" :offset="342" />
-        <TileRow :count="10" :offset="400" />
-        <TileRow :count="8" :offset="243" />
-      </div>
-      <h1 class="title front">Phumdol</h1>
+  <div class="title-cover">
+    <div class="bg">
+      <TileRowBg :count="10" :offset="tileOffset[0]" />
+      <TileRowBg :count="10" :offset="tileOffset[1]" />
+      <TileRowBg :count="10" :offset="tileOffset[2]" />
     </div>
+    <div class="title">Phumdol</div>
+    <div class="fg">
+      <TileRow :count="10" @offsetChange="(e) => setOffset(0, e)" />
+      <TileRow :count="10" @offsetChange="(e) => setOffset(1, e)" />
+      <TileRow :count="10" @offsetChange="(e) => setOffset(2, e)" />
+    </div>
+    <h1 class="title front">Phumdol</h1>
   </div>
 </template>
 
 <script>
 export default {
+  data: () => ({
+    tileOffset: [0, 0, 0],
+  }),
   created() {
     this.$store.commit('palette/init')
+  },
+  methods: {
+    setOffset(index, offset) {
+      this.$set(this.tileOffset, index, offset)
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 @use "sass:color";
+@use "~assets/styles/color" as c;
 
-.center {
-  display: flex;
-  align-items: center;
-  height: 100vh;
-}
 .title-cover {
+  box-sizing: border-box;
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -58,12 +59,10 @@ export default {
 
 .fg {
   overflow: hidden;
-  width: 100%;
 }
 
 .bg {
   position: absolute;
-  width: 100%;
   left: 0;
   top: 0;
 }

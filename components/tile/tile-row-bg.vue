@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div :style="{ width: offset + (isNaN(+offset) ? '' : 'px') }"></div>
+  <div class="row" :style="{ marginLeft: Math.min(0, offset) + 'px' }">
+    <div class="offsetter" :style="{ width: Math.max(0, offset) + 'px' }"></div>
     <TileBg v-for="i in count" :key="i" />
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
       required: true,
     },
     offset: {
-      type: [Number, String],
+      type: Number,
       default: 0,
     },
   },
@@ -24,5 +24,9 @@ export default {
 @use "~assets/styles/color";
 .row {
   display: flex;
+
+  .offsetter {
+    flex-shrink: 0;
+  }
 }
 </style>

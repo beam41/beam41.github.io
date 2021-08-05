@@ -22,9 +22,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "./tile-size.scss";
 .bg {
-  width: 150px;
-  height: 90px;
+  width: tile-size.$width;
+  height: tile-size.$height;
   flex-shrink: 0;
 }
 </style>

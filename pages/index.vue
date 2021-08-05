@@ -1,11 +1,15 @@
 <template>
   <main class="main">
-    <Title/>
+    <Title />
   </main>
 </template>
 
 <script>
-export default {}
+export default {
+  created() {
+    this.$store.commit('screen/initScreenWidth')
+  },
+}
 </script>
 
 <style lang="scss" scoped>

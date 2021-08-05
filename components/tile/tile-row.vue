@@ -1,23 +1,45 @@
 <template>
-  <div class="row">
-    <div
-      class="offsetter"
-      :style="{ width: offset + (isNaN(offset) ? '' : 'px') }"
-    ></div>
+  <div class="row" :style="{ marginLeft: Math.min(0, offset) + 'px' }">
+    <div class="offsetter" :style="{ width: Math.max(0, offset) + 'px' }"></div>
     <TileCutout v-for="i in count" :key="i" />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { randomInt } from '@/util/random'
+
 export default {
   props: {
     count: {
       type: Number,
       required: true,
     },
-    offset: {
-      type: [Number, String],
-      default: 0,
+  },
+  data: () => ({
+    offset: 0,
+  }),
+  computed: {
+    ...mapState({
+      screen: (store) => store.screen,
+    }),
+    tileRowWidth() {
+      return this.screen.tileWidth * this.count
+    },
+    tileRowWidthScrollable() {
+      return this.tileRowWidth - this.screen.screenWidth
+    },
+    center() {
+      return -this.tileRowWidthScrollable / 2
+    },
+  },
+  watch: {
+    offset(to) {
+      this.$emit('offsetChange', to)
+    },
+    tileRowWidthScrollable(to) {
+      const randomRange = to / 4
+      this.offset = this.center + randomInt(-randomRange, randomRange)
     },
   },
 }
@@ -25,9 +47,15 @@ export default {
 
 <style lang="scss" scoped>
 @use "~assets/styles/color";
+@use "./tile-size";
 .row {
   position: relative;
   display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  .offsetter {
+    flex-shrink: 0;
+  }
 
   &:after {
     content: '';
