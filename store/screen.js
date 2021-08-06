@@ -4,7 +4,7 @@ export const state = () => ({
   tileWidth: 485,
 })
 
-const FOOTER_HEIGHT = 64
+const FOOTER_HEIGHT = 64 + 32 /* padding */
 
 export const mutations = {
   init(_state) {

@@ -23,7 +23,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @use "~assets/styles/color";
-@use "./tile-size";
+@use "~assets/styles/tile-size";
 
 .cutout {
   box-sizing: border-box;
@@ -34,7 +34,7 @@ export default {
   .cutout-inner {
     height: 100%;
     border: 16px solid color.$bg;
-    border-radius: tile-size.$radius;
+    border-radius: tile-size.$radius + 16px;
     margin: -16px;
   }
 }

@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     moveRandom(to) {
-      const randomRange = to / 4
+      const randomRange = to / 3
       const offset = this.center + randomInt(-randomRange, randomRange)
       this.toOffset = offset
       if (this.init) {
@@ -95,7 +95,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "~assets/styles/color";
-@use "./tile-size";
+@use "~assets/styles/tile-size";
 .row {
   position: relative;
   display: flex;
