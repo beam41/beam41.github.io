@@ -1,6 +1,7 @@
 <template>
   <main class="main">
     <Title />
+    <Detail />
   </main>
 </template>
 
@@ -26,7 +27,7 @@ export default {
 
 .main {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   background: color.$bg;
 }
 </style>

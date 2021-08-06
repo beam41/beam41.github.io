@@ -1,17 +1,19 @@
 <template>
-  <div class="title-cover">
-    <div class="bg">
-      <TileRowBg :count="10" :offset="tileOffset[0]" />
-      <TileRowBg :count="10" :offset="tileOffset[1]" />
-      <TileRowBg :count="10" :offset="tileOffset[2]" />
+  <div class="overflow-box">
+    <div class="title-cover">
+      <div class="bg">
+        <TileRowBg :count="10" :offset="tileOffset[0]" />
+        <TileRowBg :count="10" :offset="tileOffset[1]" />
+        <TileRowBg :count="10" :offset="tileOffset[2]" />
+      </div>
+      <div class="title">Phumdol</div>
+      <div class="fg">
+        <TileRow :count="10" @offsetChange="(e) => setOffset(0, e)" />
+        <TileRow :count="10" @offsetChange="(e) => setOffset(1, e)" />
+        <TileRow :count="10" @offsetChange="(e) => setOffset(2, e)" />
+      </div>
+      <h1 class="title front">Phumdol</h1>
     </div>
-    <div class="title">Phumdol</div>
-    <div class="fg">
-      <TileRow :count="10" @offsetChange="(e) => setOffset(0, e)" />
-      <TileRow :count="10" @offsetChange="(e) => setOffset(1, e)" />
-      <TileRow :count="10" @offsetChange="(e) => setOffset(2, e)" />
-    </div>
-    <h1 class="title front">Phumdol</h1>
   </div>
 </template>
 
@@ -35,11 +37,17 @@ export default {
 @use "sass:color";
 @use "~assets/styles/color" as c;
 
+.overflow-box {
+  overflow: hidden;
+}
+
 .title-cover {
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
   width: 100%;
+  border: 16px solid c.$bg;
+  border-top: 8px solid c.$bg;
+  border-bottom: none;
 }
 
 .title {
@@ -58,7 +66,7 @@ export default {
 }
 
 .fg {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .bg {

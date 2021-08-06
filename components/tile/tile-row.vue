@@ -35,7 +35,7 @@ export default {
       return this.tileRowWidth - this.screen.screenWidth
     },
     center() {
-      return -this.tileRowWidthScrollable / 2
+      return -this.tileRowWidthScrollable / 2 - 16
     },
   },
   watch: {
@@ -100,7 +100,8 @@ export default {
   position: relative;
   display: flex;
   flex-wrap: nowrap;
-  overflow: hidden;
+  overflow: visible;
+  margin-right: -16px;
   .offsetter {
     flex-shrink: 0;
   }
