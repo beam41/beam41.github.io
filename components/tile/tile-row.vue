@@ -1,12 +1,11 @@
 <template>
   <div class="row" :style="{ marginLeft: Math.min(0, offset) + 'px' }">
     <div class="offsetter" :style="{ width: Math.max(0, offset) + 'px' }"></div>
-    <TileCutout v-for="i in count" :key="i" />
+    <TileCutout v-for="i in count" :key="i" :screen="screen" />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { randomInt } from '@/util/random'
 import { tween, easeOutBounce } from '@/util/tween'
 import { TILE_COUNT } from './tile-setting'
@@ -14,6 +13,12 @@ import { TILE_COUNT } from './tile-setting'
 const ANIMATION_LENGTH = 500
 
 export default {
+  props: {
+    screen: {
+      type: Object,
+      required: true,
+    },
+  },
   data: () => ({
     offset: 0,
     toOffset: 0,
@@ -21,9 +26,6 @@ export default {
   }),
   computed: {
     count: () => TILE_COUNT,
-    ...mapState({
-      screen: (store) => store.screen,
-    }),
     tileRowWidth() {
       return this.screen.tileWidth * this.count
     },

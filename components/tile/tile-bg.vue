@@ -14,13 +14,18 @@ import { randomInt } from '@/util/random'
 import { mapState } from 'vuex'
 
 export default {
+  props: {
+    screen: {
+      type: Object,
+      required: true,
+    },
+  },
   data: () => ({
     pal: null,
   }),
   computed: {
     ...mapState({
       palette: (store) => store.palette.currPalette,
-      screen: (store) => store.screen,
     }),
   },
   mounted() {

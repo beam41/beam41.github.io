@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
-  computed: {
-    ...mapState({
-      screen: (store) => store.screen,
-    }),
+  props: {
+    screen: {
+      type: Object,
+      required: true,
+    },
   },
 }
 </script>

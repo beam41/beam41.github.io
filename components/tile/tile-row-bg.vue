@@ -1,7 +1,7 @@
 <template>
   <div class="row" :style="{ marginLeft: Math.min(0, offset) + 'px' }">
     <div class="offsetter" :style="{ width: Math.max(0, offset) + 'px' }"></div>
-    <TileBg v-for="i in count" :key="i" />
+    <TileBg v-for="i in count" :key="i" :screen="screen" />
   </div>
 </template>
 
@@ -12,6 +12,10 @@ export default {
     offset: {
       type: Number,
       default: 0,
+    },
+    screen: {
+      type: Object,
+      required: true,
     },
   },
   computed: {

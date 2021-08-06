@@ -6,16 +6,7 @@
 </template>
 
 <script>
-export default {
-  created() {
-    this.$store.commit('screen/init')
-  },
-  mounted() {
-    window.addEventListener('resize', () => {
-      this.$store.commit('screen/init')
-    })
-  },
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>

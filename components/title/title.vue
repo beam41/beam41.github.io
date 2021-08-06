@@ -2,9 +2,9 @@
   <div class="overflow-box">
     <div class="title-cover">
       <div class="bg">
-        <TileRowBg :offset="tileOffset[0]" />
-        <TileRowBg :offset="tileOffset[1]" />
-        <TileRowBg :offset="tileOffset[2]" />
+        <TileRowBg :screen="screen" :offset="tileOffset[0]" />
+        <TileRowBg :screen="screen" :offset="tileOffset[1]" />
+        <TileRowBg :screen="screen" :offset="tileOffset[2]" />
       </div>
 
       <div class="title-box">
@@ -12,9 +12,9 @@
         <h1 class="title">Phumdol</h1>
       </div>
       <div class="fg">
-        <TileRow @offsetChange="(e) => setOffset(0, e)" />
-        <TileRow @offsetChange="(e) => setOffset(1, e)" />
-        <TileRow @offsetChange="(e) => setOffset(2, e)" />
+        <TileRow :screen="screen" @offsetChange="(e) => setOffset(0, e)" />
+        <TileRow :screen="screen" @offsetChange="(e) => setOffset(1, e)" />
+        <TileRow :screen="screen" @offsetChange="(e) => setOffset(2, e)" />
       </div>
       <div class="title-box-copy">
         <div class="quote">Hello my name is...</div>
@@ -25,16 +25,36 @@
 </template>
 
 <script>
+import { FOOTER_HEIGHT } from '../tile/tile-setting'
 export default {
   data: () => ({
     tileOffset: [0, 0, 0],
+    screen: {
+      screenWidth: 0,
+      tileHeight: 300,
+      tileWidth: 485,
+    },
   }),
   created() {
     this.$store.commit('palette/init')
+    this.setTile()
+  },
+  mounted() {
+    window.addEventListener('resize', () => {
+      this.setTile()
+    })
   },
   methods: {
     setOffset(index, offset) {
       this.$set(this.tileOffset, index, offset)
+    },
+    setTile() {
+      const tileHeight = Math.round((window.innerHeight - FOOTER_HEIGHT) / 3)
+      this.screen = {
+        screenWidth: window.innerWidth,
+        tileHeight,
+        tileWidth: Math.round(tileHeight * 1.618),
+      }
     },
   },
 }
@@ -57,7 +77,8 @@ export default {
   border-bottom: none;
 }
 
-.title-box, .title-box-copy {
+.title-box,
+.title-box-copy {
   position: absolute;
   left: 50%;
   top: 50%;
