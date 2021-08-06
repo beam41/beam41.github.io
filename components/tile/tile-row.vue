@@ -9,22 +9,18 @@
 import { mapState } from 'vuex'
 import { randomInt } from '@/util/random'
 import { tween, easeOutBounce } from '@/util/tween'
+import { TILE_COUNT } from './tile-setting'
 
 const ANIMATION_LENGTH = 500
 
 export default {
-  props: {
-    count: {
-      type: Number,
-      required: true,
-    },
-  },
   data: () => ({
     offset: 0,
     toOffset: 0,
     init: true,
   }),
   computed: {
+    count: () => TILE_COUNT,
     ...mapState({
       screen: (store) => store.screen,
     }),

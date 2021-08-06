@@ -6,16 +6,16 @@
 </template>
 
 <script>
+import { TILE_COUNT } from './tile-setting'
 export default {
   props: {
-    count: {
-      type: Number,
-      required: true,
-    },
     offset: {
       type: Number,
       default: 0,
     },
+  },
+  computed: {
+    count: () => TILE_COUNT,
   },
 }
 </script>
