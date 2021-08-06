@@ -1,12 +1,13 @@
 <template>
   <div class="row" :style="{ marginLeft: Math.min(0, offset) + 'px' }">
     <div class="offsetter" :style="{ width: Math.max(0, offset) + 'px' }"></div>
-    <TileBg v-for="i in count" :key="i" :screen="screen" />
+    <TileBg :currPalette="currPalette" v-for="i in count" :key="i" :screen="screen" />
   </div>
 </template>
 
 <script>
-import { TILE_COUNT } from './tile-setting'
+import { TILE_COUNT, PALETTE } from './tile-setting'
+
 export default {
   props: {
     offset: {
@@ -17,9 +18,16 @@ export default {
       type: Object,
       required: true,
     },
+    currPaletteIndex: {
+      type: Number,
+      required: true,
+    },
   },
   computed: {
     count: () => TILE_COUNT,
+    currPalette() {
+      return PALETTE[this.currPaletteIndex]
+    },
   },
 }
 </script>

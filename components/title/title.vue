@@ -2,9 +2,21 @@
   <div class="overflow-box">
     <div class="title-cover">
       <div class="bg">
-        <TileRowBg :screen="screen" :offset="tileOffset[0]" />
-        <TileRowBg :screen="screen" :offset="tileOffset[1]" />
-        <TileRowBg :screen="screen" :offset="tileOffset[2]" />
+        <TileRowBg
+          :curr-palette-index="currPaletteIndex"
+          :screen="screen"
+          :offset="tileOffset[0]"
+        />
+        <TileRowBg
+          :curr-palette-index="currPaletteIndex"
+          :screen="screen"
+          :offset="tileOffset[1]"
+        />
+        <TileRowBg
+          :curr-palette-index="currPaletteIndex"
+          :screen="screen"
+          :offset="tileOffset[2]"
+        />
       </div>
 
       <div class="title-box">
@@ -25,7 +37,8 @@
 </template>
 
 <script>
-import { FOOTER_HEIGHT } from '../tile/tile-setting'
+import { randomInt } from '@/util/random'
+import { FOOTER_HEIGHT, PALETTE } from '../tile/tile-setting'
 export default {
   data: () => ({
     tileOffset: [0, 0, 0],
@@ -34,10 +47,11 @@ export default {
       tileHeight: 300,
       tileWidth: 485,
     },
+    currPaletteIndex: 0,
   }),
   created() {
-    this.$store.commit('palette/init')
     this.setTile()
+    this.currPaletteIndex = randomInt(0, PALETTE.length - 1)
   },
   mounted() {
     window.addEventListener('resize', () => {

@@ -2,7 +2,7 @@
   <div
     class="bg"
     :style="{
-      background: '#' + palette[pal],
+      background: '#' + currPalette[pal],
       width: screen.tileWidth + 'px',
       height: screen.tileHeight + 'px',
     }"
@@ -11,7 +11,6 @@
 
 <script>
 import { randomInt } from '@/util/random'
-import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -19,15 +18,14 @@ export default {
       type: Object,
       required: true,
     },
+    currPalette: {
+      type: Array,
+      required: true,
+    },
   },
   data: () => ({
     pal: null,
   }),
-  computed: {
-    ...mapState({
-      palette: (store) => store.palette.currPalette,
-    }),
-  },
   mounted() {
     this.pal = randomInt(0, 2)
   },
