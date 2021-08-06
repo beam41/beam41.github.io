@@ -75,7 +75,7 @@ export default {
 
         this.offset = tween(
           offsetStart,
-          this.toOffset,
+          offset,
           start,
           ANIMATION_LENGTH,
           timestamp,
