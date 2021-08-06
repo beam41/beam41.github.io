@@ -11,5 +11,6 @@ export const mutations = {
     _state.screenWidth = window.innerWidth
     _state.tileHeight = Math.round((window.innerHeight - FOOTER_HEIGHT) / 3)
     _state.tileWidth = Math.round(_state.tileHeight * 1.618)
+
   },
 }

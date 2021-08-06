@@ -6,13 +6,20 @@
         <TileRowBg :offset="tileOffset[1]" />
         <TileRowBg :offset="tileOffset[2]" />
       </div>
-      <div class="title">Phumdol</div>
+
+      <div class="title-box">
+        <div class="quote">Hello my name is...</div>
+        <h1 class="title">Phumdol</h1>
+      </div>
       <div class="fg">
         <TileRow @offsetChange="(e) => setOffset(0, e)" />
         <TileRow @offsetChange="(e) => setOffset(1, e)" />
         <TileRow @offsetChange="(e) => setOffset(2, e)" />
       </div>
-      <h1 class="title front">Phumdol</h1>
+      <div class="title-box-copy">
+        <div class="quote">Hello my name is...</div>
+        <h1 class="title">Phumdol</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -50,19 +57,29 @@ export default {
   border-bottom: none;
 }
 
-.title {
-  font-size: 400px;
-  color: white;
-  margin: 0;
+.title-box, .title-box-copy {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   font-weight: 700;
+  user-select: none;
+  color: white;
+  text-align: center;
 }
 
-.front {
-  color: color.scale(white, $alpha: -95%);
+.quote {
+  font-size: clamp(1rem, 5vw, 2rem);
+}
+
+.title {
+  font-size: 20vw;
+  margin: 0;
+  line-height: 1;
+}
+
+.title-box-copy {
+  color: color.scale(white, $alpha: -75%);
 }
 
 .fg {
