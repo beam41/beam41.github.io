@@ -8,6 +8,9 @@
 <script>
 import { mapState } from 'vuex'
 import { randomInt } from '@/util/random'
+import { tween, easeOutBounce } from '@/util/tween'
+
+const ANIMATION_LENGTH = 500
 
 export default {
   props: {
@@ -18,6 +21,8 @@ export default {
   },
   data: () => ({
     offset: 0,
+    toOffset: 0,
+    init: true,
   }),
   computed: {
     ...mapState({
@@ -40,9 +45,49 @@ export default {
     tileRowWidthScrollable: {
       immediate: true,
       handler(to) {
-        const randomRange = to / 4
-        this.offset = this.center + randomInt(-randomRange, randomRange)
+        this.moveRandom(to)
       },
+    },
+  },
+  mounted() {
+    const randomMove = () => {
+      this.moveRandom(this.tileRowWidthScrollable)
+      setTimeout(randomMove, randomInt(2000, 10000))
+    }
+    setTimeout(randomMove, 1000)
+  },
+  methods: {
+    moveRandom(to) {
+      const randomRange = to / 4
+      const offset = this.center + randomInt(-randomRange, randomRange)
+      this.toOffset = offset
+      if (this.init) {
+        this.offset = offset
+        this.init = false
+        return
+      }
+      const offsetStart = this.offset
+      let start = null
+      const animateOffset = (timestamp) => {
+        if (start === null) {
+          start = timestamp
+        }
+
+        this.offset = tween(
+          offsetStart,
+          this.toOffset,
+          start,
+          ANIMATION_LENGTH,
+          timestamp,
+          easeOutBounce
+        )
+
+        if (timestamp >= start + ANIMATION_LENGTH) {
+          return
+        }
+        window.requestAnimationFrame(animateOffset)
+      }
+      window.requestAnimationFrame(animateOffset)
     },
   },
 }
