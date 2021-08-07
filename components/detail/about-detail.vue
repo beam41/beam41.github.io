@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { lerp } from '@/util/number'
+import { lerp, normalize } from '@/util/number'
 export default {
   props: {
     percentage: {
@@ -38,7 +38,11 @@ export default {
       this.forceUpdate
       const percentage = this.percentage
       if (this.$refs.text?.scrollHeight) {
-        return lerp(0, this.$refs.text?.scrollHeight, percentage)
+        return lerp(
+          0,
+          this.$refs.text?.scrollHeight,
+          normalize(0.2, 0.8, percentage)
+        )
       }
       return 0
     },
