@@ -8,7 +8,7 @@
 <script>
 import { randomInt } from '@/util/random'
 import { tween, easeOutBounce } from '@/util/tween'
-import { TILE_COUNT } from './tile-setting'
+import { TILE_COUNT, LOADING_OUT } from './tile-setting'
 
 const ANIMATION_LENGTH = 500
 
@@ -52,7 +52,7 @@ export default {
       this.moveRandom(this.tileRowWidthScrollable)
       setTimeout(randomMove, randomInt(2000, 10000))
     }
-    setTimeout(randomMove, 1000)
+    setTimeout(randomMove, LOADING_OUT + 500)
   },
   methods: {
     moveRandom(to) {
