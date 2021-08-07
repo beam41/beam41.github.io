@@ -30,17 +30,23 @@ export default {
     },
   },
   data: () => ({
-    textHeight: 0,
+    forceUpdate: 0,
   }),
   computed: {
     coverHeight() {
-      return lerp(0, this.textHeight, this.percentage)
+      // eslint-disable-next-line no-unused-expressions
+      this.forceUpdate
+      const percentage = this.percentage
+      if (this.$refs.text?.scrollHeight) {
+        return lerp(0, this.$refs.text?.scrollHeight, percentage)
+      }
+      return 0
     },
   },
   mounted() {
-    this.textHeight = this.$refs.text.scrollHeight
+    this.forceUpdate++
     window.addEventListener('resize', () => {
-      this.textHeight = this.$refs.text.scrollHeight
+      this.forceUpdate++
     })
   },
 }
