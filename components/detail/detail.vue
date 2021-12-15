@@ -29,12 +29,14 @@ export default {
     },
   },
   mounted() {
-    window.addEventListener('scroll', () => {
+    const setScroll = () => {
       this.maxScroll =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight
       this.scroll = document.documentElement.scrollTop
-    })
+      window.requestAnimationFrame(setScroll)
+    }
+    window.requestAnimationFrame(setScroll)
   },
 }
 </script>
