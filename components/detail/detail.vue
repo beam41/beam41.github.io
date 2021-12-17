@@ -1,9 +1,14 @@
 <template>
-  <div class="detail-cover">
-    <div :style="{ height: detailHeight + 'px' }" class="detail">
-      <h2 class="about-header">About</h2>
-      <AboutDetail :percentage="scrollPercentage" />
+  <div class="detail-box">
+    <div class="detail-cover">
+      <div class="detail-background"></div>
+      <div :style="{ height: detailHeight + 'px' }" class="detail">
+        <h2 class="about-header">About</h2>
+        <AboutDetail :percentage="scrollPercentage" />
+      </div>
     </div>
+    <div class="detail-sleeve"></div>
+    <div class="detail-sleeve-hid"></div>
   </div>
 </template>
 
@@ -52,15 +57,46 @@ export default {
   padding: 16px 16px 16px;
   height: 100vh;
   width: 100%;
+  position: relative;
+
+  .detail-background {
+    position: absolute;
+    background: color.$detail-bg;
+    border-radius: tile-size.$radius;
+    height: calc(100% - 32px);
+    width: calc(100% - 32px);
+    z-index: 0;
+  }
 
   .detail {
-    background: color.$detail-bg;
+    position: absolute;
     height: 64px;
-    border-radius: tile-size.$radius;
+    width: calc(100% - 32px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 1;
+  }
+}
+
+.detail-box {
+  .detail-sleeve {
+    position: fixed;
+    width: calc(100% - 32px);
+    border: 16px solid color.$bg;
+    border-top: 0;
+    border-radius: 0 0 tile-size.$radius + 16 tile-size.$radius + 16;
+    height: 64px;
+    bottom: 0;
+  }
+
+  .detail-sleeve-hid {
+    position: fixed;
+    width: calc(100%);
+    height: 16px;
+    background: color.$bg;
+    bottom: 0;
   }
 }
 
