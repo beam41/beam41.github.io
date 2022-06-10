@@ -16,10 +16,14 @@ const canvas = ref<HTMLCanvasElement>(null)
 
 const cover = ref<HTMLDivElement>(null)
 onMounted(() => {
-  canvas.value.width = cover.value.clientWidth * 2
-  canvas.value.height = cover.value.clientHeight * 2
+  canvas.value.style.width = cover.value.clientWidth + 'px'
+  canvas.value.style.height = cover.value.clientHeight + 'px'
+  var devicePixelRatio = window.devicePixelRatio || 1
+  canvas.value.width = cover.value.clientWidth * devicePixelRatio
+  canvas.value.height = cover.value.clientHeight * devicePixelRatio
   window.addEventListener('resize', () => {
-    canvas.value.width = cover.value.clientWidth * 2
+    canvas.value.style.width = cover.value.clientWidth + 'px'
+    canvas.value.width = cover.value.clientWidth * devicePixelRatio
   })
 })
 
@@ -72,19 +76,57 @@ void main() {
 precision mediump float;
 uniform vec3 metaBalls[${BALL_COUNT}];
 
-void main() {
+vec4 shader(in vec2 fragCoord) {
   float result = 0.;
   for (int i = 0; i < ${BALL_COUNT}; i++) {
     vec3 ball = metaBalls[i];
     if (ball.z == 0.) continue;
-    float dx = gl_FragCoord.x - ball.x;
-    float dy =  gl_FragCoord.y - ball.y;
+    float dx = fragCoord.x - ball.x;
+    float dy =  fragCoord.y - ball.y;
     result += ball.z * ball.z / (dx*dx + dy*dy);
   }
 
-  gl_FragColor = mix(vec4(${139 / 255},${69 / 255},${
+  return mix(vec4(${139 / 255},${69 / 255},${
       19 / 255
     }, 1), vec4(1), step(result, 1.));
+}
+
+void main() {
+  gl_FragColor = vec4(0);
+  const float ss = 4.;
+  const float s = 1. / ss;
+
+  vec4 curr = shader(gl_FragCoord.xy);
+  vec4 q1 = shader(gl_FragCoord.xy + vec2(0.5, 0.5));
+  vec4 q2 = shader(gl_FragCoord.xy + vec2(-.5, 0.5));
+  vec4 q3 = shader(gl_FragCoord.xy + vec2(-.5, -.5));
+  vec4 q4 = shader(gl_FragCoord.xy + vec2(0.5, -.5));
+  if (curr == q1 && curr == q2 && curr == q3 && curr == q4) {
+    gl_FragColor = curr;
+  } else {
+    for (float x = -.5; x < .5; x += s)
+      for (float y = -.5; y < .5; y += s) {
+        if (x == .5) {
+            if (y == .5) {
+                gl_FragColor += q1;
+            } else if (y == -.5) {
+                gl_FragColor += q4;
+            }
+        } else if (x == -.5) {
+            if (y == .5) {
+                gl_FragColor += q2;
+            } else if (y == -.5) {
+                gl_FragColor += q3;
+            }
+        } else if (x == 0. && y == 0.) {
+            gl_FragColor += curr;
+        } else {
+          gl_FragColor += shader(gl_FragCoord.xy + vec2(x, y));
+        }
+      }
+
+    gl_FragColor /= ss * ss;
+  }
 }`
   )
 
@@ -207,9 +249,9 @@ void main() {
   position: relative;
 }
 
-.canvas {
-  transform: scale(0.5) translate(-50%, -50%);
-}
+// .canvas {
+//   transform: scale(0.25) translate(-150%, -150%);
+// }
 
 .pause-btn {
   display: flex;
