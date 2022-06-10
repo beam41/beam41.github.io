@@ -1,36 +1,15 @@
 <template>
   <div class="cover" ref="cover">
     <canvas v-once class="canvas" ref="canvas" />
+    <button class="pause-btn" @click="pauseBtn">
+      <svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
+      </svg>
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-function loadShader(gl: WebGLRenderingContext, type: number, source: string) {
-  const shader = gl.createShader(type)
-  gl.shaderSource(shader, source)
-  gl.compileShader(shader)
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.error(gl.getShaderInfoLog(shader))
-  }
-  return shader
-}
-
-class Ball {
-  position: { x: number; y: number; r: number }
-  speed: { x: number; y: number }
-  constructor(x: number, y: number, r: number, sx: number, sy: number) {
-    this.position = {
-      x: x,
-      y: y,
-      r: r,
-    }
-    this.speed = {
-      x: sx,
-      y: sy,
-    }
-  }
-}
-
 const BALL_COUNT = 25
 
 const canvas = ref<HTMLCanvasElement>(null)
@@ -44,17 +23,41 @@ onMounted(() => {
   })
 })
 
-const visible = ref(true)
+const pause = ref(false)
+const keepPause = ref(false)
 onMounted(() => {
-  // intesection observer here
+  let observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !keepPause.value) {
+        pause.value = false
+      } else {
+        pause.value = true
+      }
+    })
+  })
+  observer.observe(canvas.value)
 })
+
+function pauseBtn() {
+  pause.value = !pause.value
+  keepPause.value = !keepPause.value
+}
 
 onMounted(() => {
   //#region init gl program
   const gl = canvas.value.getContext('webgl')
 
+  function loadShader(type: number, source: string) {
+    const shader = gl.createShader(type)
+    gl.shaderSource(shader, source)
+    gl.compileShader(shader)
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.error(gl.getShaderInfoLog(shader))
+    }
+    return shader
+  }
+
   const vertexShader = loadShader(
-    gl,
     gl.VERTEX_SHADER,
     `
 attribute vec2 position;
@@ -64,7 +67,6 @@ void main() {
   )
 
   const fragmentShader = loadShader(
-    gl,
     gl.FRAGMENT_SHADER,
     `
 precision mediump float;
@@ -111,54 +113,78 @@ void main() {
   //#region metaball
   const metaBallsLocation = gl.getUniformLocation(program, 'metaBalls')
 
+  class Ball {
+    position: { x: number; y: number; r: number }
+    speed: { x: number; y: number }
+    constructor(x: number, y: number, r: number, sx: number, sy: number) {
+      this.position = {
+        x: x,
+        y: y,
+        r: r,
+      }
+      this.speed = {
+        x: sx,
+        y: sy,
+      }
+    }
+  }
+
   const metaBalls = Array(BALL_COUNT)
-    .fill(0)
+    .fill(null)
     .map(
-      (_, i) =>
+      (_) =>
         new Ball(
           Math.random(),
           Math.random() * gl.canvas.height,
           Math.random() * 100 + 50,
-          (Math.random() - 0.5) / 4500,
-          Math.random() - 0.5
+          (Math.random() - 0.5) / 5,
+          (Math.random() - 0.5) / 5
         )
     )
     .sort((a, b) => b.position.r - a.position.r)
 
   let prevTimeStamp = 0
   const metaBallsUniform = new Float32Array(3 * BALL_COUNT)
+  // halves the render framerate
+  let frameon = false
   function step(timestamp: number) {
-    if (!visible) return
+    frameon = !frameon
+    if (pause.value || !frameon) {
+      requestAnimationFrame(step)
+      prevTimeStamp = timestamp
+      return
+    }
     metaBallsUniform.fill(0)
-    const deltaTime = timestamp - prevTimeStamp
+    const deltaTime = Math.min(timestamp - prevTimeStamp, 1000 / 30)
     prevTimeStamp = timestamp
 
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
 
+    const maxBall = Math.min(gl.canvas.width / 200, BALL_COUNT)
+
     // animate
-    for (const ball of metaBalls) {
-      ball.position.x += ball.speed.x * deltaTime
+    for (let i = 0; i < maxBall; i++) {
+      const ball = metaBalls[i]
+      ball.position.x += (ball.speed.x / gl.canvas.width) * deltaTime
       ball.position.y += ball.speed.y * deltaTime
       if (ball.position.x < 0) {
         ball.position.x = 0
         ball.speed.x *= -1
-      }
-      if (ball.position.x > 1) {
+      } else if (ball.position.x > 1) {
         ball.position.x = 1
         ball.speed.x *= -1
       }
       if (ball.position.y < 0) {
         ball.position.y = 0
         ball.speed.y *= -1
-      }
-      if (ball.position.y > gl.canvas.height) {
+      } else if (ball.position.y > gl.canvas.height) {
         ball.position.y = gl.canvas.height
         ball.speed.y *= -1
       }
     }
+
     // draw
-    const maxBall = gl.canvas.width / 100
-    for (let i = 0; i < Math.min(maxBall, BALL_COUNT); i++) {
+    for (let i = 0; i < maxBall; i++) {
       metaBallsUniform[3 * i] = metaBalls[i].position.x * gl.canvas.width
       metaBallsUniform[3 * i + 1] = metaBalls[i].position.y
       metaBallsUniform[3 * i + 2] = metaBalls[i].position.r
@@ -178,9 +204,23 @@ void main() {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 .canvas {
   transform: scale(0.5) translate(-50%, -50%);
+}
+
+.pause-btn {
+  display: flex;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  border: none;
+  background: rgba(127, 127, 127, 0.5);
+  backdrop-filter: blur(4px);
+  padding: 2px;
+  border-radius: 100px;
+  color: white;
 }
 </style>

@@ -6,4 +6,5 @@ export default defineNuxtConfig({
     shim: false,
     typeCheck: true,
   },
+  css: ['@/assets/css/index.scss'],
 })
