@@ -5,6 +5,10 @@ export default defineNuxtConfig({
   typescript: {
     shim: false,
     typeCheck: true,
+    strict: true
   },
-  css: ['@/assets/css/index.scss'],
+  css: [
+    'normalize.css/normalize.css',
+    '@/assets/css/index.scss',
+  ],
 })
