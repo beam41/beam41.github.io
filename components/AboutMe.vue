@@ -1,7 +1,7 @@
 <template>
   <p class="about">
-    My name is Phumdol Lookthipnapha. A software engineer based in Chiang Mai,
-    Thailand. I have knowledge in full-stack web development.
+    My name is Phumdol Lookthipnapha, a software engineer based in Chiang Mai,
+    Thailand. I have experience in full-stack web development.
   </p>
   <div class="contact">
     <div class="em">

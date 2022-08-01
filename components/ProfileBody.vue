@@ -3,7 +3,9 @@
     <Content title="About Me">
       <AboutMe />
     </Content>
-    <Content title="Educations"> </Content>
+    <Content title="Educations">
+      <Education />
+    </Content>
     <Content title="Skills"> </Content>
     <Content title="Awards & Certifications"> </Content>
   </main>
