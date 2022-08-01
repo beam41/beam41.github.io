@@ -1,5 +1,4 @@
 <template>
-  <div>
-    <ProfileHeader />
-  </div>
+  <ProfileHeader />
+  <ProfileBody />
 </template>

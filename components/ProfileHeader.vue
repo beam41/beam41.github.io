@@ -1,6 +1,6 @@
 <template>
-  <h1 class="header">
-    <svg viewBox="0 0 20 5">
+  <header class="header">
+    <svg viewBox="0 0 22 5" ref="header">
       <defs>
         <linearGradient
           v-for="(g, i) of gradients"
@@ -25,7 +25,7 @@
         <tspan
           font-size="5"
           x="50%"
-          y="58%"
+          y="50%"
           dominant-baseline="middle"
           text-anchor="middle"
         >
@@ -33,13 +33,22 @@
         </tspan>
       </text>
     </svg>
-  </h1>
+  </header>
 </template>
 
 <script lang="ts" setup>
 import { pingpongLoop, easeInOutSine } from '@/util/tween'
-import { StyleValue } from 'vue'
 import { randomInt } from '@/util/random'
+
+const header = ref<Element>()
+const onScreen = ref(false)
+
+onMounted(() => {
+  let observer = new IntersectionObserver((entries) => {
+    onScreen.value = entries[0].isIntersecting
+  })
+  observer.observe(header.value!)
+})
 
 class RGB {
   constructor(public r: number, public g: number, public b: number) {}
@@ -69,8 +78,8 @@ class GradientValue {
     this.colorA = colorA
     this.colorB = colorB
 
-    this.durationDeg = randomInt(30000, 60000)
-    this.durationColor = randomInt(30000, 60000)
+    this.durationDeg = randomInt(10000 / 2, 10000)
+    this.durationColor = randomInt(10000 / 2, 10000)
 
     this.offsetDeg = randomInt(0, this.durationDeg)
     this.offsetColor = randomInt(0, this.durationColor)
@@ -128,24 +137,28 @@ class GradientValue {
 }
 
 const gradients = ref<GradientValue[]>([
-  new GradientValue(-20, 20, new RGB(232, 138, 255), new RGB(255, 150, 234)),
+  new GradientValue(-30, 30, new RGB(232, 138, 255), new RGB(255, 229, 135)),
   new GradientValue(
-    120 - 20,
-    120 + 20,
+    120 - 30,
+    120 + 30,
     new RGB(138, 255, 236),
     new RGB(161, 255, 217)
   ),
   new GradientValue(
-    240 - 20,
-    240 + 20,
+    240 - 30,
+    240 + 30,
     new RGB(255, 217, 150),
-    new RGB(255, 229, 135)
+    new RGB(255, 150, 234)
   ),
 ])
 
 onMounted(() => {
   let start = -1
   function animate(timestamp: number) {
+    if (!onScreen.value) {
+      window.requestAnimationFrame(animate)
+      return
+    }
     if (start === -1) start = timestamp
     for (const g of gradients.value) {
       g.animate(start, timestamp)
@@ -162,16 +175,17 @@ onMounted(() => {
   height: 100vh;
   position: relative;
   margin: 0;
+  user-select: none;
 
   & > svg {
-    width: 100%;
+    width: 80%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
     text {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: bold;
     }
   }
 }
