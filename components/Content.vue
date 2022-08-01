@@ -8,9 +8,13 @@
         { 'overridden-hidden': visible && !overrideVisible },
       ]"
     >
-      <h1 class="content-header">{{ title }}</h1>
-      <div class="content-body">
-        <slot></slot>
+      <h1 class="content-header">
+        <span>{{ title }}</span>
+      </h1>
+      <div class="content-body-wrapper">
+        <div class="content-body">
+          <slot></slot>
+        </div>
       </div>
     </section>
   </div>
@@ -65,15 +69,25 @@ onMounted(() => {
     width: 100%;
     text-align: center;
     transform: translateY(calc(-50% - 4px));
-    text-shadow: 4px 0px white, -4px 0px white;
     color: rgb(71, 71, 71);
+
+    & > span {
+      background: white;
+      padding: 0 2px;
+    }
   }
-  .content-body {
+  .content-body-wrapper {
     box-sizing: border-box;
     margin: 0 auto;
-    width: max(400px, 50%);
+    width: 50%;
     min-width: 400px;
-    padding: 48px 16px;
+    padding: 32px 16px 64px;
+    text-align: center;
+
+    .content-body {
+      margin: auto;
+      max-width: 600px;
+    }
   }
 
   &.hidden {
