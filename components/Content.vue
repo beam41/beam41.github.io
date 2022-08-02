@@ -38,7 +38,7 @@ onMounted(() => {
       if (!visible.value) visible.value = entries[0].isIntersecting
     },
     {
-      rootMargin: '-5% 0px',
+      rootMargin: '-10% 0px',
       threshold: 1,
     }
   )
@@ -81,7 +81,7 @@ onMounted(() => {
     margin: 0 auto;
     width: 50%;
     min-width: 400px;
-    padding: 32px 16px 64px;
+    padding: 48px 16px 80px;
     text-align: center;
 
     .content-body {

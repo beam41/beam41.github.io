@@ -6,7 +6,10 @@
     <Content title="Educations">
       <Education />
     </Content>
-    <Content title="Skills"> </Content>
+    <Content title="Skills">
+      <Skill />
+    </Content>
+    <Content title="Work History"> </Content>
     <Content title="Awards & Certifications"> </Content>
   </main>
   <footer class="footer"></footer>

@@ -70,8 +70,9 @@
 
   & > a:hover {
     color: white;
-    transition: background 250ms ease-in-out;
+    transition: background 0s;
   }
+
   & > * {
     border-radius: 4px;
     height: 48px;
@@ -80,6 +81,7 @@
     align-items: center;
     color: rgb(74, 74, 74);
     text-decoration: none;
+    transition: background 250ms ease-in-out;
 
     &.em {
       background: rgba(black, 0.05);
