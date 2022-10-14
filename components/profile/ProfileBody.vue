@@ -1,13 +1,13 @@
 <template>
   <main class="body">
     <Content title="About Me">
-      <AboutMe />
+      <BodyAboutMe />
     </Content>
     <Content title="Educations">
-      <Education />
+      <BodyEducation />
     </Content>
     <Content title="Skills">
-      <Skill />
+      <BodySkill />
     </Content>
     <Content title="Work History"> </Content>
     <Content title="Awards & Certifications"> </Content>

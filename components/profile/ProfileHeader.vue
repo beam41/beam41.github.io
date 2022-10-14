@@ -1,13 +1,13 @@
 <template>
   <header class="header">
-    <svg viewBox="0 0 22 5" ref="header">
+    <svg ref="header" viewBox="0 0 22 5">
       <defs>
         <linearGradient
           v-for="(g, i) of gradients"
           :id="`grad-${i + 1}`"
           :x1="g.xyRotation.x1"
-          :y1="g.xyRotation.y1"
           :x2="g.xyRotation.x2"
+          :y1="g.xyRotation.y1"
           :y2="g.xyRotation.y2"
           gradientUnits="objectBoundingBox"
         >
@@ -23,11 +23,11 @@
       </defs>
       <text v-for="i of gradients.length" :fill="`url(#grad-${i})`">
         <tspan
+          dominant-baseline="middle"
           font-size="5"
+          text-anchor="middle"
           x="50%"
           y="50%"
-          dominant-baseline="middle"
-          text-anchor="middle"
         >
           Phumdol
         </tspan>
@@ -37,8 +37,8 @@
 </template>
 
 <script lang="ts" setup>
-import { pingpongLoop, easeInOutSine } from '@/util/tween'
-import { randomInt } from '@/util/random'
+import { pingpongLoop, easeInOutSine } from '~/util/tween'
+import { randomInt } from '~/util/random'
 
 const header = ref<Element>()
 const onScreen = ref(false)
@@ -56,18 +56,17 @@ class RGB {
 
 class GradientValue {
   public deg: number
-  private degA: number
-  private degB: number
-
   public color: RGB
-  private colorA: RGB
-  private colorB: RGB
+  private readonly degA: number
+  private readonly degB: number
+  private readonly colorA: RGB
+  private readonly colorB: RGB
 
-  private durationDeg: number
-  private durationColor: number
+  private readonly durationDeg: number
+  private readonly durationColor: number
 
-  private offsetDeg: number
-  private offsetColor: number
+  private readonly offsetDeg: number
+  private readonly offsetColor: number
 
   constructor(degA: number, degB: number, colorA: RGB, colorB: RGB) {
     this.deg = degA
@@ -83,6 +82,17 @@ class GradientValue {
 
     this.offsetDeg = randomInt(0, this.durationDeg)
     this.offsetColor = randomInt(0, this.durationColor)
+  }
+
+  get xyRotation() {
+    const rad = this.deg * (Math.PI / 180)
+    const rad180 = rad + Math.PI
+    return {
+      x1: 0.5 + Math.sin(rad) * 0.5,
+      y1: 0.5 + Math.cos(rad) * 0.5,
+      x2: 0.5 + Math.sin(rad180) * 0.5,
+      y2: 0.5 + Math.cos(rad180) * 0.5,
+    }
   }
 
   public animate(start: number, current: number) {
@@ -124,16 +134,6 @@ class GradientValue {
       easeInOutSine
     )
   }
-
-  get xyRotation() {
-    const rad = this.deg * (Math.PI / 180)
-    return {
-      x1: 0.5 + Math.sin(rad) * 0.5,
-      y1: 0.5 + Math.cos(rad) * 0.5,
-      x2: 0.5 + Math.sin(rad + Math.PI) * 0.5,
-      y2: 0.5 + Math.cos(rad + Math.PI) * 0.5,
-    }
-  }
 }
 
 const gradients = ref<GradientValue[]>([
@@ -173,16 +173,13 @@ onMounted(() => {
 .header {
   width: 100%;
   height: 100vh;
-  position: relative;
-  margin: 0;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   & > svg {
     width: 80%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 
     text {
       font-weight: bold;
