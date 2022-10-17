@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     strict: true,
   },
   css: ['normalize.css/normalize.css', '@/assets/css/index.scss'],
-  meta: {
+  head: {
     link: [
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       {

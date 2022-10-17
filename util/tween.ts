@@ -9,7 +9,14 @@ export function pingpongLoop(
   current: number,
   easing: (x: number) => number
 ) {
-  return pingpongOnce(from, to, 0, duration, (current - start + offset) % duration, easing)
+  return pingpongOnce(
+    from,
+    to,
+    0,
+    duration,
+    (current - start + offset) % duration,
+    easing
+  )
 }
 
 export function pingpongOnce(

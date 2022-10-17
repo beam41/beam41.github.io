@@ -9,7 +9,9 @@
     <Content title="Skills">
       <BodySkill />
     </Content>
-    <Content title="Work History"> </Content>
+    <Content title="Work History">
+      <BodyWorkHistory />
+    </Content>
     <Content title="Awards & Certifications"> </Content>
   </main>
   <footer class="footer"></footer>

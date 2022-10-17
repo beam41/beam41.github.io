@@ -45,8 +45,9 @@
 
 .contact {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(212px, 1fr));
   gap: 8px;
+  margin: 0 64px;
 
   & > a:hover {
     color: white;
@@ -55,13 +56,14 @@
 
   & > * {
     border-radius: 4px;
-    height: 48px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: rgb(74, 74, 74);
     text-decoration: none;
     transition: background 250ms ease-in-out;
+    font-size: 0.9em;
 
     &.em {
       background: rgba(black, 0.05);
@@ -93,6 +95,10 @@
       margin-top: -2px;
       margin-right: 4px;
     }
+  }
+
+  & > a {
+    user-select: none;
   }
 }
 </style>
