@@ -16,5 +16,6 @@
     "sass": "^1.51.0",
     "sass-loader": "^12.6.0",
     "vue-tsc": "^1.0.9"
-  }
+  },
+  "packageManager": "yarn@3.3.0"
 }
