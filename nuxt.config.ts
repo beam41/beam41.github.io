@@ -1,4 +1,4 @@
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt/config'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -8,18 +8,20 @@ export default defineNuxtConfig({
     strict: true,
   },
   css: ['normalize.css/normalize.css', '@/assets/css/index.scss'],
-  head: {
-    link: [
-      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-      {
-        rel: 'preconnect',
-        href: 'https://fonts.gstatic.com',
-        crossorigin: true,
-      },
-      {
-        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
-        rel: 'stylesheet',
-      },
-    ],
+  app: {
+    head: {
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: 'anonymous',
+        },
+        {
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
+          rel: 'stylesheet',
+        },
+      ],
+    },
   },
 })

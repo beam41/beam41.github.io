@@ -186,4 +186,14 @@ onMounted(() => {
     }
   }
 }
+
+@media print {
+  .header {
+    height: 100px !important;
+    padding: 32px 0 20px;
+    & > svg {
+      width: 200px !important;
+    }
+  }
+}
 </style>

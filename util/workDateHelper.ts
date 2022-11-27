@@ -7,7 +7,6 @@ export function durationToString(
   const diffMonth = (end ?? dayjs().startOf('M')).add(1, 'M').diff(start, 'M')
   const year = Math.trunc(diffMonth / 12)
   const month = diffMonth % 12
-  console.log(year, month)
   // prettier-ignore
   return (
     (year > 0

@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="education-item">
     <h2 class="info uni">Chiang Mai University</h2>
     <h3 class="info degree">
       Bachelor of Science (Computer Science), English Minor
     </h3>
-    <h4 class="info year-grade">2017-2021 | Grade: 3.38</h4>
+    <h4 class="info year-grade">2017 - 2021 | Grade: 3.38</h4>
     <p class="desc">
       Graduated with 2nd class Honors. Was department council vice president and
       a member of the faculty's photo club. I made class project using React,
@@ -23,7 +23,6 @@
   color: rgb(85, 85, 85);
 }
 .year-grade {
-  color: rgb(120, 120, 120);
   font-size: 0.8em;
 }
 

@@ -1,24 +1,50 @@
 <template>
-  <div v-for="w in works">
-    <h2 class="info place">{{ w.place }}</h2>
-    <p v-if="w.desc" class="desc">
-      {{ w.desc }}
-    </p>
-    <h3 v-for="title in w.title" class="info title">
-      {{ title.name }} &centerdot; {{ title.type }} |
-      {{ `${title.start.format('MMM')} ${title.start.year()}` }} -
-      {{
-        title.end ? `${title.end.format('MMM')} ${title.end.year()}` : 'Present'
-      }}
-      &centerdot; {{ durationToString(title.start, title.end) }}
-    </h3>
+  <div class="work-wrapper">
+    <div v-for="w in works">
+      <h2 class="head place">{{ w.place }}</h2>
+      <p v-if="w.desc" class="head desc">
+        {{ w.desc }}
+      </p>
+      <div class="head total-time">
+        {{
+          durationToString(
+            w.title.at(-1)?.start ?? dayjs(),
+            w.title.at(0)?.end ?? dayjs()
+          )
+        }}
+      </div>
+      <div class="title-wrap">
+        <h3 v-for="title in w.title" class="title">
+          <span class="name">
+            {{ title.name }} &centerdot; {{ title.type }}
+          </span>
+          <span class="date">
+            {{ title.start.format('MMM YYYY') }} -
+            {{ title.end ? title.end.format('MMM YYYY') : 'Present' }}
+            &centerdot; {{ durationToString(title.start, title.end) }}
+          </span>
+        </h3>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { durationToString } from '~/util/workDateHelper'
 import dayjs from 'dayjs'
-import { WorkPlace } from '~/util/workplaceType'
+
+export type WorkType = 'Full-time' | 'Intern'
+export type Title = {
+  readonly name: string
+  readonly type: WorkType
+  readonly start: dayjs.Dayjs
+  readonly end?: dayjs.Dayjs
+}
+export type WorkPlace = {
+  readonly place: string
+  readonly title: Title[]
+  readonly desc?: string
+}
 
 const works: readonly WorkPlace[] = [
   {
@@ -36,7 +62,7 @@ const works: readonly WorkPlace[] = [
         end: dayjs('2022-03'),
       },
     ],
-    desc: null,
+    desc: 'Worked on project using C# (ASP.NET Core) and JavaScript (React, Angular)',
   },
   {
     place: 'Artisan Digital',
@@ -48,22 +74,44 @@ const works: readonly WorkPlace[] = [
         end: dayjs('2021-10'),
       },
     ],
-    desc: null,
+    desc: 'Worked on project using Vue.js',
   },
 ]
 </script>
 
 <style lang="scss" scoped>
-.info {
+.work-wrapper {
+  margin-top: -32px;
+}
+
+.head {
   margin: 0 0 8px;
+}
+
+.place {
+  margin-top: 32px;
+}
+
+.total-time {
+  font-size: 0.9rem;
 }
 
 .title {
   font-weight: normal;
-  color: rgb(85, 85, 85);
-}
-
-.desc {
+  font-size: 1rem;
   margin: 16px 0 0;
+
+  & > span {
+    display: block;
+  }
+
+  .name {
+    margin-bottom: 2px;
+  }
+
+  .date {
+    font-weight: bold;
+    font-size: 0.8rem;
+  }
 }
 </style>

@@ -12,15 +12,9 @@
     <Content title="Work History">
       <BodyWorkHistory />
     </Content>
-    <Content title="Awards & Certifications"> </Content>
+    <Content title="Awards & Certifications">
+      <BodyAward />
+    </Content>
   </main>
-  <footer class="footer"></footer>
+  <Footer />
 </template>
-
-<script lang="ts" setup></script>
-
-<style lang="scss" scoped>
-.footer {
-  height: 200px;
-}
-</style>

@@ -1,18 +1,23 @@
 <template>
   <div class="skill-wrapper">
-    <h2 class="skill-head">Experienced</h2>
-    <div class="skills">
-      <span v-for="s of productionSkillsLang">{{ s }}</span>
+    <div class="skill-info">
+      <h2 class="skill-head">Experienced</h2>
+      <div class="skills">
+        <span v-for="s of productionSkillsLang">{{ s }}</span>
+      </div>
+      <div class="skills bot">
+        <span v-for="s of productionSkillsFramework">{{ s }}</span>
+      </div>
     </div>
-    <div class="skills bot">
-      <span v-for="s of productionSkillsFramework">{{ s }}</span>
-    </div>
-    <h2 class="skill-head">Learned</h2>
-    <div class="skills">
-      <span v-for="s of hobbySkillsLang">{{ s }}</span>
-    </div>
-    <div class="skills bot">
-      <span v-for="s of hobbySkillsFramework">{{ s }}</span>
+
+    <div class="skill-info">
+      <h2 class="skill-head">Learned</h2>
+      <div class="skills">
+        <span v-for="s of hobbySkillsLang">{{ s }}</span>
+      </div>
+      <div class="skills bot">
+        <span v-for="s of hobbySkillsFramework">{{ s }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -53,8 +58,11 @@ const hobbySkillsFramework = [
 .skill-wrapper {
   margin-top: -32px;
 }
+.skill-info {
+  margin-top: 32px;
+}
 .skill-head {
-  margin: 32px 0 12px;
+  margin: 0 0 12px;
   font-size: 1.17em;
 }
 

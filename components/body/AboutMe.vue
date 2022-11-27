@@ -101,4 +101,10 @@
     user-select: none;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .contact {
+    margin: 0;
+  }
+}
 </style>

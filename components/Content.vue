@@ -1,23 +1,23 @@
 <template>
   <hr class="divider" />
-  <div ref="contentObserver">
-    <section
-      :class="[
-        'content',
-        { hidden: !visible },
-        { 'overridden-hidden': visible && !overrideVisible },
-      ]"
-    >
-      <h1 class="content-header">
-        <span>{{ title }}</span>
-      </h1>
-      <div class="content-body-wrapper">
-        <div class="content-body">
-          <slot></slot>
-        </div>
+
+  <section
+    :class="[
+      'content',
+      { hidden: !visible },
+      { 'overridden-hidden': visible && !overrideVisible },
+    ]"
+    ref="contentObserver"
+  >
+    <h1 class="content-header">
+      <span>{{ title }}</span>
+    </h1>
+    <div class="content-body-wrapper">
+      <div class="content-body">
+        <slot></slot>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
@@ -38,8 +38,8 @@ onMounted(() => {
       if (!visible.value) visible.value = entries[0].isIntersecting
     },
     {
-      rootMargin: '-10% 0px',
-      threshold: 1,
+      rootMargin: '-100px 0px',
+      threshold: 0,
     }
   )
   observer.observe(contentObserver.value!)
@@ -61,6 +61,10 @@ onMounted(() => {
   min-width: 400px;
 }
 .content {
+  width: 50%;
+  min-width: 400px;
+  margin: 0 auto;
+
   position: relative;
   transition: all 250ms ease-in;
   .content-header {
@@ -70,7 +74,6 @@ onMounted(() => {
     text-align: center;
     transform: translateY(calc(-50% - 4px));
     color: rgb(71, 71, 71);
-
     & > span {
       background: white;
       padding: 0 2px;
@@ -78,9 +81,6 @@ onMounted(() => {
   }
   .content-body-wrapper {
     box-sizing: border-box;
-    margin: 0 auto;
-    width: 50%;
-    min-width: 400px;
     padding: 48px 16px 80px;
     text-align: center;
 
@@ -99,6 +99,39 @@ onMounted(() => {
   &.overridden-hidden {
     opacity: 0;
     transition: all 250ms ease-out;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .divider {
+    width: 100%;
+    min-width: 0;
+  }
+  .content {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media print {
+  .divider {
+    width: 100% !important;
+  }
+
+  .content {
+    width: 100% !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+
+    .content-body {
+      max-width: 100% !important;
+    }
+
+    &:last-child {
+      .content-body-wrapper {
+        padding: 48px 16px 0 !important;
+      }
+    }
   }
 }
 </style>
