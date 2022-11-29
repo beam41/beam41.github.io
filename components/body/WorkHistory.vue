@@ -19,7 +19,7 @@
             {{ title.name }} &centerdot; {{ title.type }}
           </span>
           <span class="date">
-            {{ title.start.format('MMM YYYY') }} -
+            {{ title.start.format('MMM YYYY') }} &#8211;
             {{ title.end ? title.end.format('MMM YYYY') : 'Present' }}
             &centerdot; {{ durationToString(title.start, title.end) }}
           </span>
@@ -30,17 +30,31 @@
 </template>
 
 <script lang="ts" setup>
-import { durationToString } from '~/util/workDateHelper'
 import dayjs from 'dayjs'
 
-export type WorkType = 'Full-time' | 'Intern'
-export type Title = {
+function durationToString(start: dayjs.Dayjs, end?: dayjs.Dayjs): string {
+  const diffMonth = (end ?? dayjs().startOf('M')).add(1, 'M').diff(start, 'M')
+  const year = Math.trunc(diffMonth / 12)
+  const month = diffMonth % 12
+  // prettier-ignore
+  return (
+    (year > 0
+      ? `${year} yr` + (year > 1 ? 's' : '') + (month > 0 ? ' ' : '')
+      : '') +
+    (month > 0
+      ? `${month} mo` + (month > 1 ? 's' : '')
+      : '')
+  )
+}
+
+type WorkType = 'Full-time' | 'Intern'
+type Title = {
   readonly name: string
   readonly type: WorkType
   readonly start: dayjs.Dayjs
   readonly end?: dayjs.Dayjs
 }
-export type WorkPlace = {
+type WorkPlace = {
   readonly place: string
   readonly title: Title[]
   readonly desc?: string

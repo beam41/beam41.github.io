@@ -34,11 +34,17 @@ const overrideVisible = ref(false)
 
 onMounted(() => {
   let observer = new IntersectionObserver(
-    (entries) => {
-      if (!visible.value) visible.value = entries[0].isIntersecting
+    (entries, currObserver) => {
+      console.log('observe')
+      if (!visible.value) {
+        visible.value = entries[0].isIntersecting
+        if (visible.value) {
+          currObserver.disconnect()
+        }
+      }
     },
     {
-      rootMargin: '-100px 0px',
+      rootMargin: '-20% 0px',
       threshold: 0,
     }
   )
@@ -93,12 +99,11 @@ onMounted(() => {
   &.hidden {
     opacity: 0;
     transform: translateY(25px);
-    transition: all 250ms ease-out;
   }
 
   &.overridden-hidden {
     opacity: 0;
-    transition: all 250ms ease-out;
+    transition: all 125ms ease-out;
   }
 }
 
