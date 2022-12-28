@@ -35,7 +35,6 @@ const overrideVisible = ref(false)
 onMounted(() => {
   let observer = new IntersectionObserver(
     (entries, currObserver) => {
-      console.log('observe')
       if (!visible.value) {
         visible.value = entries[0].isIntersecting
         if (visible.value) {
