@@ -4,39 +4,57 @@
     Thailand. I have experience in full-stack web development.
   </p>
   <div class="contact">
-    <div class="em">
-      <SvgEmail />
-      <span>phumdol.l@gmail.com</span>
-    </div>
-    <a
-      class="li"
-      href="https://www.linkedin.com/in/phumdol/"
-      target="_blank"
-      rel="noopener"
+    <component
+      v-for="contact in contactList"
+      :is="contact.href ? 'a' : 'div'"
+      :class="contact.className"
+      :href="contact.href"
+      :target="contact.href && '_blank'"
+      :rel="contact.href && 'noopener'"
     >
-      <SvgLinkedin />
-      <span>Phumdol Lookthipnapha</span>
-    </a>
-    <a
-      class="gh"
-      href="https://github.com/beam41/"
-      target="_blank"
-      rel="noopener"
-    >
-      <SvgGithub />
-      <span>beam41</span>
-    </a>
-    <a
-      class="gl"
-      href="https://gitlab.com/beam41"
-      target="_blank"
-      rel="noopener"
-    >
-      <SvgGitlab />
-      <span>beam41</span>
-    </a>
+      <component :is="contact.icon" />
+      <span>{{ contact.text }}</span>
+    </component>
   </div>
 </template>
+
+<script setup lang="ts">
+import type { Component } from 'vue'
+import { SvgEmail, SvgGithub, SvgGitlab, SvgLinkedin } from '#components'
+
+type Contact = {
+  className: string
+  icon: Component
+  href?: string
+  text: string
+}
+
+const contactList: Contact[] = [
+  {
+    className: 'em',
+    icon: SvgEmail,
+    text: 'phumdol.l@gmail.com',
+  },
+  {
+    className: 'li',
+    icon: SvgLinkedin,
+    href: 'https://www.linkedin.com/in/phumdol/',
+    text: 'Phumdol Lookthipnapha',
+  },
+  {
+    className: 'gh',
+    icon: SvgGithub,
+    href: 'https://github.com/beam41/',
+    text: 'beam41',
+  },
+  {
+    className: 'gl',
+    icon: SvgGitlab,
+    href: 'https://gitlab.com/beam41',
+    text: 'beam41',
+  },
+]
+</script>
 
 <style lang="scss" scoped>
 .about {
