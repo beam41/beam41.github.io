@@ -6,11 +6,11 @@
   <div class="contact">
     <component
       v-for="contact in contactList"
-      :is="contact.href ? 'a' : 'div'"
+      :is="contact.link ? 'a' : 'div'"
       :class="contact.className"
-      :href="contact.href"
-      :target="contact.href && '_blank'"
-      :rel="contact.href && 'noopener'"
+      :href="contact.link"
+      :target="contact.link && '_blank'"
+      :rel="contact.link && 'noopener'"
     >
       <component :is="contact.icon" />
       <span>{{ contact.text }}</span>
@@ -25,7 +25,7 @@ import { SvgEmail, SvgGithub, SvgGitlab, SvgLinkedin } from '#components'
 type Contact = {
   className: string
   icon: Component
-  href?: string
+  link?: string
   text: string
 }
 
@@ -38,19 +38,19 @@ const contactList: Contact[] = [
   {
     className: 'li',
     icon: SvgLinkedin,
-    href: 'https://www.linkedin.com/in/phumdol/',
+    link: 'https://www.linkedin.com/in/phumdol/',
     text: 'Phumdol Lookthipnapha',
   },
   {
     className: 'gh',
     icon: SvgGithub,
-    href: 'https://github.com/beam41/',
+    link: 'https://github.com/beam41/',
     text: 'beam41',
   },
   {
     className: 'gl',
     icon: SvgGitlab,
-    href: 'https://gitlab.com/beam41',
+    link: 'https://gitlab.com/beam41',
     text: 'beam41',
   },
 ]
