@@ -8,7 +8,7 @@
       target="_blank"
       >source code</a
     >
-    <div class="print">Written in HTML</div>
+    <div class="print">beam41.github.io</div>
   </footer>
 </template>
 
