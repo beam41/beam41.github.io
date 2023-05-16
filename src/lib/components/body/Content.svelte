@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts">
 	import { onMount } from 'svelte';
 
 	export let title: string;
@@ -22,7 +22,7 @@
 				threshold: 0
 			}
 		);
-		observer.observe(contentObserver!);
+		observer.observe(contentObserver);
 
 		overrideVisible = window.scrollY > 32;
 		window.addEventListener('scroll', () => {

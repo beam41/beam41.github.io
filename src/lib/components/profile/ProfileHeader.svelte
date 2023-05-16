@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts">
 	import { pingpongLoop, easeInOutSine } from '$lib/utils/tween';
 	import { randomInt } from '$lib/utils/random';
 	import { onMount } from 'svelte';
@@ -10,7 +10,7 @@
 		let observer = new IntersectionObserver((entries) => {
 			onScreen = entries[0].isIntersecting;
 		});
-		observer.observe(header!);
+		observer.observe(header);
 	});
 
 	class RGB {
