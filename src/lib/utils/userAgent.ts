@@ -1,4 +1,5 @@
 export function isMobileAndTablet() {
+	/* eslint-disable */
 	let check = false;
 	(function (a) {
 		if (
@@ -10,6 +11,7 @@ export function isMobileAndTablet() {
 			)
 		)
 			check = true;
-	})(navigator.userAgent || navigator.vendor || window.opera);
+	})(navigator.userAgent || navigator.vendor || (window as any).opera);
 	return check;
+	/* eslint-enable */
 }
