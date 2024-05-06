@@ -120,14 +120,14 @@ float sceneSDF(vec3 pos) {
 	const vec3 s = vec3(300.0);
 
 	pos *= rotateX(-rotateCamera.y * mouseRotateStrength);
-	pos *= rotateY((-rotateCamera.x * mouseRotateStrength) + (rotateYValue));
+	pos *= rotateY(-rotateCamera.x * mouseRotateStrength + rotateYValue);
 
 	pos = pos - s * round(pos / s);
 
 	float nameDist = opExtrusion(pos, sdName(pos.xy, 5.0), 2.5);
 	float badgeDist = sdRoundBox(pos, vec3(35.0, 12.0, 1.5), 1.0);
 
-	float revealSpereDist = sdSphere(pos, length(rotateCamera) * 80.0);
+	float revealSpereDist = sdSphere(pos, (length(rotateCamera) + abs(rotateYValue)) * 80.0);
 
 	float revealBadgeDist = opSmoothIntersection(badgeDist, revealSpereDist, 0.8);
 

@@ -14,7 +14,7 @@
 	let fpsInterval = 1000 / 60;
 	onMount(() => {
 		if (isMobileAndTablet()) {
-			fpsInterval = 1000 / 24;
+			fpsInterval = 1000 / 30;
 		}
 	});
 
@@ -148,6 +148,8 @@
 	});
 
 	const detectMouseMove = (event: PointerEvent) => {
+		if (event.pointerType !== 'mouse') return;
+
 		const centerX = document.body.clientWidth / 2;
 		const centerY = window.innerHeight / 2;
 
@@ -167,7 +169,9 @@
 	});
 
 	const resizeCanvas = () => {
-		const scale = window.devicePixelRatio;
+		let scale = window.devicePixelRatio;
+
+		if (isMobileAndTablet()) scale = 1.25;
 
 		canvas.width = document.body.clientWidth * scale;
 		canvas.height = window.innerHeight * scale;
