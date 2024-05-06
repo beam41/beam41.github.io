@@ -6,7 +6,7 @@
 		'HTML',
 		'CSS',
 		'SQL',
-		'GraphQL'
+		'GraphQL',
 	] as const;
 
 	const productionSkillsFramework = [
@@ -16,7 +16,7 @@
 		'Vue.js',
 		'Express.js',
 		'AdonisJS',
-		'MongoDB'
+		'MongoDB',
 	] as const;
 
 	const hobbySkillsLang = ['Go', 'Python', 'Dart', 'C++'] as const;
@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="skill-info">
-		<h2 class="skill-head">Learned</h2>
+		<h2 class="skill-head">Knows</h2>
 		<div class="skills">
 			{#each hobbySkillsLang as skill}
 				<span>{skill}</span>

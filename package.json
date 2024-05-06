@@ -1,5 +1,5 @@
 {
-	"name": "svelte-port",
+	"name": "beam41-github-io",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -27,7 +27,8 @@
 		"svelte-check": "^3.0.1",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
-		"vite": "^4.3.0"
+		"vite": "^4.3.0",
+		"vite-plugin-glsl": "^1.3.0"
 	},
 	"type": "module",
 	"dependencies": {

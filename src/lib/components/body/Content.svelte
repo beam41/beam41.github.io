@@ -19,15 +19,22 @@
 			},
 			{
 				rootMargin: '-20% 0px',
-				threshold: 0
-			}
+				threshold: 0,
+			},
 		);
 		observer.observe(contentObserver);
 
-		overrideVisible = window.scrollY > 32;
-		window.addEventListener('scroll', () => {
+		const overrideVisibleUpdate = () => {
 			overrideVisible = window.scrollY > 32;
-		});
+		};
+
+		overrideVisibleUpdate();
+		window.addEventListener('scroll', overrideVisibleUpdate, true);
+
+		return () => {
+			observer.disconnect();
+			window.removeEventListener('scroll', overrideVisibleUpdate, true);
+		};
 	});
 </script>
 

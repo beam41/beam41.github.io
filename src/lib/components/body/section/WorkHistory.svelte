@@ -1,20 +1,6 @@
 <script lang="ts">
 	import dayjs from 'dayjs';
-
-	function durationToString(start: dayjs.Dayjs, end?: dayjs.Dayjs): string {
-		const diffMonth = (end ?? dayjs().startOf('M')).add(1, 'M').diff(start, 'M');
-		const year = Math.trunc(diffMonth / 12);
-		const month = diffMonth % 12;
-		// prettier-ignore
-		return (
-            (year > 0
-                ? `${year} yr` + (year > 1 ? 's' : '') + (month > 0 ? ' ' : '')
-                : '') +
-            (month > 0
-                ? `${month} mo` + (month > 1 ? 's' : '')
-                : '')
-        )
-	}
+	import { durationToString } from '$lib/utils/date';
 
 	type WorkType = 'Full-time' | 'Intern';
 	type Title = {
@@ -36,16 +22,16 @@
 				{
 					name: 'Mid-Level Web Developer',
 					type: 'Full-time',
-					start: dayjs('2022-04')
+					start: dayjs('2022-04'),
 				},
 				{
 					name: 'Junior Developer',
 					type: 'Full-time',
 					start: dayjs('2021-04'),
-					end: dayjs('2022-03')
-				}
+					end: dayjs('2022-03'),
+				},
 			],
-			desc: 'Worked on project using C# (ASP.NET Core) and JavaScript (React, Angular)'
+			desc: 'Worked on project using C# (ASP.NET Core) and JavaScript (React, Angular)',
 		},
 		{
 			place: 'Artisan Digital',
@@ -54,11 +40,11 @@
 					name: 'Frontend Developer',
 					type: 'Intern',
 					start: dayjs('2021-05'),
-					end: dayjs('2021-10')
-				}
+					end: dayjs('2021-10'),
+				},
 			],
-			desc: 'Worked on project using Vue.js'
-		}
+			desc: 'Worked on project using Vue.js',
+		},
 	];
 </script>
 

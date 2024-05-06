@@ -26,3 +26,9 @@
 	</Content>
 </main>
 <Footer />
+
+<style lang="scss">
+	.body {
+		padding: 0 8px;
+	}
+</style>
