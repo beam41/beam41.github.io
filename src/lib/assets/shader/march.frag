@@ -21,7 +21,7 @@ uniform sampler2D nameTexture;
 #define EPS (0.1)
 
 #ifdef MOBILE
-#define MAX_STEPS (64)
+#define MAX_STEPS (128)
 #define MAX_DIST (600.0)
 #define FOG_START (550.0)
 #else
