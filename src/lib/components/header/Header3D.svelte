@@ -146,7 +146,6 @@
 	};
 
 	onMount(() => {
-
 		addEventListener('mousemove', detectMouseMove, true);
 		addEventListener('touchmove', detectMouseMove, true);
 
@@ -160,7 +159,6 @@
 		canvas.width = document.body.clientWidth * scale;
 		canvas.height = window.innerHeight * scale;
 	};
-
 
 	onMount(() => {
 		resizeCanvas();
@@ -176,21 +174,21 @@
 	onMount(() => {
 		let animId: number;
 		let timeLastFrame: number;
-			const run = (timeStamp: number) => {
-				if (timeLastFrame) {
-					if (timeStamp - timeLastFrame > (1/acceptableFramerate) * 1000) {
-						console.log("framedrop", timeStamp - timeLastFrame)
-						scale = 1
-					} else {
-						scale = window?.devicePixelRatio
-					}
-					resizeCanvas()
+		const run = (timeStamp: number) => {
+			if (timeLastFrame) {
+				if (timeStamp - timeLastFrame > (1 / acceptableFramerate) * 1000) {
+					console.log('framedrop', timeStamp - timeLastFrame);
+					scale = 1;
+				} else {
+					scale = window?.devicePixelRatio;
 				}
-				timeLastFrame = timeStamp;
-				animId = requestAnimationFrame(run);
-			};
-
+				resizeCanvas();
+			}
+			timeLastFrame = timeStamp;
 			animId = requestAnimationFrame(run);
+		};
+
+		animId = requestAnimationFrame(run);
 
 		return () => {
 			cancelAnimationFrame(animId);
