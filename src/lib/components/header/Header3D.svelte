@@ -182,12 +182,11 @@
 
 	onMount(() => {
 		resizeCanvas();
-		const debouncedResize = debounce(resizeCanvas, 200);
 
-		addEventListener('resize', debouncedResize, true);
+		addEventListener('resize', resizeCanvas, true);
 
 		return () => {
-			removeEventListener('resize', debouncedResize, true);
+			removeEventListener('resize', resizeCanvas, true);
 		};
 	});
 </script>
@@ -198,5 +197,6 @@
 	.logo {
 		width: 100%;
 		height: 100vh;
+		height: 100dvh;
 	}
 </style>
