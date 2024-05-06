@@ -142,8 +142,10 @@ vec3 calculateNormal(vec3 pos) {
 }
 
 void main() {
+	gl_FragColor = vec4(1.);
+
 	vec2 uv = gl_FragCoord.xy * 2.0;
-	uv = (uv - resolution.xy) / resolution.y;
+	uv = (uv - resolution.xy) / min(resolution.x, resolution.y);
 
 	vec3 pos = vec3(0.0, 0.0, -100.0);
 	vec3 rayDirection = normalize(vec3(uv, 2));

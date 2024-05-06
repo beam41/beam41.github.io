@@ -5,10 +5,13 @@
 	import NameImg from '$lib/assets/image/name.png';
 	import { compileShader, getAttribLocation, getUniformLocation } from '$lib/utils/shader';
 	import { clamp } from '$lib/utils/number';
+	import {debounce} from '$lib/utils/debounce';
 
 	const dispatch = createEventDispatcher<{ glFailed: undefined }>();
 
 	let canvas: HTMLCanvasElement;
+	let canvasUnscaleWidth = 0;
+	let canvasUnscaleHeight = 0;
 
 	let onScreen = false;
 
@@ -31,6 +34,7 @@
 		let runId: number;
 		try {
 			const gl = canvas.getContext('webgl', {
+				alpha: false,
 				antialias: false,
 				depth: false,
 				stencil: false,
@@ -100,7 +104,7 @@
 			image.src = NameImg;
 
 			const resolutionHandle = getUniformLocation(gl, program, 'resolution');
-			gl.uniform2f(resolutionHandle, canvas.width, canvas.height);
+
 
 			const rotateStrengthHandle = getUniformLocation(gl, program, 'rotateStrength');
 			gl.uniform1f(rotateStrengthHandle, rotateStrength);
@@ -109,6 +113,9 @@
 
 			const run = () => {
 				if (onScreen) {
+					gl.viewport(0, 0, canvas.width, canvas.height);
+					gl.uniform2f(resolutionHandle, canvas.width, canvas.height);
+
 					gl.uniform2f(rotateCameraHandle, mousePosNormX, mousePosNormY);
 					gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 				}
@@ -145,23 +152,32 @@
 			removeEventListener('touchmove', detectMouseMove, true);
 		};
 	});
+
+	onMount(() => {
+		const resizeCanvas = () => {
+			const scale = window.devicePixelRatio;
+
+			canvas.width = document.body.clientWidth * scale;
+			canvas.height = window.innerHeight * scale;
+		};
+
+		resizeCanvas();
+
+		const debouncedResize = debounce(resizeCanvas, 200);
+
+		addEventListener('resize', debouncedResize, true);
+
+		return () => {
+			removeEventListener('resize', debouncedResize, true);
+		};
+	});
 </script>
 
-<div class="logo-cover">
-	<canvas bind:this={canvas} class="logo" width="500" height="500" />
-</div>
+<canvas bind:this={canvas} class="logo" />
 
 <style lang="scss">
-	.logo-cover {
+	.logo {
 		width: 100%;
 		height: 100vh;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		.logo {
-			width: 100%;
-			max-width: 500px;
-		}
 	}
 </style>
