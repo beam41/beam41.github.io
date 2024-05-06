@@ -184,6 +184,7 @@ void main() {
             vec3 normal = (calculateNormal(pos) + 1.) / CONTRIBUTE_FACTOR;
 
             gl_FragColor = vec4(vec3(normal.r + normal.g), 1.);
+            break;
         }
     }
 }
