@@ -12,23 +12,23 @@
 		{
 			name: 'Career Essentials in Software Development by Microsoft and LinkedIn',
 			date: dayjs('2022-12'),
-			link: 'https://www.linkedin.com/learning/certificates/d6dfa4849775d286c01be374cc30b1c0c28aa99ad3e6c11814082be82c7e8354'
+			link: 'https://www.linkedin.com/learning/certificates/d6dfa4849775d286c01be374cc30b1c0c28aa99ad3e6c11814082be82c7e8354',
 		},
 		{
 			name: 'Microsoft Certified: Azure Fundamentals',
 			date: dayjs('2021-10'),
-			link: 'https://www.credly.com/badges/e7f9fdfc-3225-4774-a347-4bfd0177e8b0'
+			link: 'https://www.credly.com/badges/e7f9fdfc-3225-4774-a347-4bfd0177e8b0',
 		},
 		{
 			name: 'Google Code Jam 2021, Qualification Round',
 			date: dayjs('2021-03'),
-			info: '41pts'
+			info: '41pts',
 		},
 		{
 			name: 'Google Hash Code 2021, Qualification Round',
 			date: dayjs('2021-02'),
-			info: 'Rank 227th'
-		}
+			info: 'Rank 227th',
+		},
 	];
 </script>
 

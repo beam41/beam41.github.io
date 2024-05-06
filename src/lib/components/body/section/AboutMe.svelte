@@ -16,26 +16,26 @@
 		{
 			className: 'em',
 			icon: SvgEmail,
-			text: 'phumdol.l@gmail.com'
+			text: 'phumdol.l@gmail.com',
 		},
 		{
 			className: 'li',
 			icon: SvgLinkedin,
 			link: 'https://www.linkedin.com/in/phumdol/',
-			text: 'Phumdol Lookthipnapha'
+			text: 'Phumdol Lookthipnapha',
 		},
 		{
 			className: 'gh',
 			icon: SvgGithub,
 			link: 'https://github.com/beam41/',
-			text: 'beam41'
+			text: 'beam41',
 		},
 		{
 			className: 'gl',
 			icon: SvgGitlab,
 			link: 'https://gitlab.com/beam41',
-			text: 'beam41'
-		}
+			text: 'beam41',
+		},
 	];
 </script>
 

@@ -7,7 +7,7 @@ export function pingpongLoop(
 	duration: number,
 	offset: number,
 	current: number,
-	easing: (x: number) => number
+	easing: (x: number) => number,
 ) {
 	return pingpongOnce(from, to, 0, duration, (current - start + offset) % duration, easing);
 }
@@ -18,7 +18,7 @@ export function pingpongOnce(
 	start: number,
 	duration: number,
 	current: number,
-	easing: (x: number) => number
+	easing: (x: number) => number,
 ) {
 	const timeNormalize = normalize(start, start + duration, current);
 	const currentT = easing((timeNormalize > 0.5 ? 1 - timeNormalize : timeNormalize) * 2);
@@ -31,7 +31,7 @@ export function tween(
 	start: number,
 	duration: number,
 	current: number,
-	easing: (x: number) => number
+	easing: (x: number) => number,
 ) {
 	const timeNormalize = normalize(start, start + duration, current);
 	const currentT = easing(timeNormalize);

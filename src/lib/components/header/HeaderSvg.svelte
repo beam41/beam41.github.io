@@ -18,7 +18,11 @@
 	});
 
 	class RGB {
-		constructor(public r: number, public g: number, public b: number) {}
+		constructor(
+			public r: number,
+			public g: number,
+			public b: number,
+		) {}
 	}
 
 	class GradientValue {

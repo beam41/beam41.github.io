@@ -15,8 +15,8 @@
 			yearStart: 2017,
 			yearEnd: 2021,
 			grade: '3.38',
-			desc: "Graduated with 2nd class Honors. Was department council vice president and a member of the faculty's photo club. I made class project using React, Vue, Express.js, and ASP.NET Core. I contributed some code for a game use in Science Week event. The game was written in Unity."
-		}
+			desc: "Graduated with 2nd class Honors. Was department council vice president and a member of the faculty's photo club. I made class project using React, Vue, Express.js, and ASP.NET Core. I contributed some code for a game use in Science Week event. The game was written in Unity.",
+		},
 	];
 </script>
 
