@@ -127,17 +127,22 @@
 	});
 
 	onMount(() => {
-		const detectMouseMove = (event: MouseEvent) => {
+		const detectMouseMove = (event: MouseEvent | TouchEvent) => {
 			const centerX = document.body.clientWidth / 2;
 			const centerY = window.innerHeight / 2;
 
-			mousePosNormX = clamp(-1, 1, (centerX - event.pageX) / centerX);
-			mousePosNormY = clamp(-1, 1, (centerY - event.pageY) / centerY);
+			const pageX = (event as MouseEvent).pageX ?? (event as TouchEvent).touches[0]?.pageX
+			const pageY = (event as MouseEvent).pageY ?? (event as TouchEvent).touches[0]?.pageY
+
+			mousePosNormX = clamp(-1, 1, (centerX - pageX) / centerX);
+			mousePosNormY = clamp(-1, 1, (centerY - pageY) / centerY);
 		};
 		addEventListener('mousemove', detectMouseMove, true);
+		addEventListener('touchmove', detectMouseMove, true);
 
 		return () => {
 			removeEventListener('mousemove', detectMouseMove, true);
+			removeEventListener('touchmove', detectMouseMove, true);
 		};
 	});
 </script>
