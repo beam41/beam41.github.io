@@ -6,13 +6,21 @@
 	import { compileShader, getAttribLocation, getUniformLocation } from '$lib/utils/shader';
 	import { clamp } from '$lib/utils/number';
 	import { debounce } from '$lib/utils/debounce';
+	import { easeInOutSine, pingpongLoop } from '$lib/utils/tween';
 	import { isMobileAndTablet } from '$lib/utils/userAgent';
+
+	const MOUSE_ROTATE_STRENGTH = 0.5 as const;
+
+	let fpsInterval = 1000 / 60;
+	onMount(() => {
+		if (isMobileAndTablet()) {
+			fpsInterval = 1000 / 24;
+		}
+	});
 
 	const dispatch = createEventDispatcher<{ glFailed: undefined }>();
 
 	let canvas: HTMLCanvasElement;
-
-	let scale = 1;
 
 	let onScreen = false;
 
@@ -29,7 +37,6 @@
 
 	let mousePosNormX = 0;
 	let mousePosNormY = 0;
-	const rotateStrength = 1 as const;
 
 	onMount(() => {
 		let runId: number;
@@ -106,18 +113,25 @@
 
 			const resolutionHandle = getUniformLocation(gl, program, 'resolution');
 
-			const rotateStrengthHandle = getUniformLocation(gl, program, 'rotateStrength');
-			gl.uniform1f(rotateStrengthHandle, rotateStrength);
+			const mouseRotateStrengthHandle = getUniformLocation(gl, program, 'mouseRotateStrength');
+			gl.uniform1f(mouseRotateStrengthHandle, MOUSE_ROTATE_STRENGTH);
 
 			const rotateCameraHandle = getUniformLocation(gl, program, 'rotateCamera');
 
-			const run = () => {
-				if (onScreen) {
+			const rotateYValueHandle = getUniformLocation(gl, program, 'rotateYValue');
+
+			let lastTimeStamp = 0;
+			const run = (timestamp: number) => {
+				if (onScreen && timestamp - lastTimeStamp >= fpsInterval) {
 					gl.viewport(0, 0, canvas.width, canvas.height);
 					gl.uniform2f(resolutionHandle, canvas.width, canvas.height);
 
+					const rotateY = pingpongLoop(-0.5, 0.5, 0, 40000, 0, timestamp, easeInOutSine);
+					gl.uniform1f(rotateYValueHandle, rotateY);
+
 					gl.uniform2f(rotateCameraHandle, mousePosNormX, mousePosNormY);
 					gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+					lastTimeStamp = timestamp;
 				}
 
 				runId = requestAnimationFrame(run);
@@ -133,31 +147,27 @@
 		};
 	});
 
-	const detectMouseMove = (event: MouseEvent | TouchEvent) => {
+	const detectMouseMove = (event: PointerEvent) => {
 		const centerX = document.body.clientWidth / 2;
 		const centerY = window.innerHeight / 2;
 
-		const pageX = (event as MouseEvent).pageX ?? (event as TouchEvent).touches[0]?.pageX;
-		const pageY = (event as MouseEvent).pageY ?? (event as TouchEvent).touches[0]?.pageY;
+		const pageX = event.pageX;
+		const pageY = event.pageY;
 
 		mousePosNormX = clamp(-1, 1, (centerX - pageX) / centerX);
 		mousePosNormY = clamp(-1, 1, (centerY - pageY) / centerY);
 	};
 
 	onMount(() => {
-		addEventListener('mousemove', detectMouseMove, true);
-		addEventListener('touchmove', detectMouseMove, true);
+		addEventListener('pointermove', detectMouseMove, true);
 
 		return () => {
-			removeEventListener('mousemove', detectMouseMove, true);
-			removeEventListener('touchmove', detectMouseMove, true);
+			removeEventListener('pointermove', detectMouseMove, true);
 		};
 	});
 
 	const resizeCanvas = () => {
-		scale = window.devicePixelRatio;
-
-		if (isMobileAndTablet()) scale = 1;
+		const scale = window.devicePixelRatio;
 
 		canvas.width = document.body.clientWidth * scale;
 		canvas.height = window.innerHeight * scale;
@@ -175,21 +185,11 @@
 	});
 </script>
 
-<canvas bind:this={canvas} class="logo" class:no-scale={scale === 1} />
+<canvas bind:this={canvas} class="logo" />
 
 <style lang="scss">
 	.logo {
 		width: 100%;
 		height: 100vh;
-
-		// https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas
-		&.no-scale {
-      image-rendering: optimizeSpeed;
-      image-rendering: -moz-crisp-edges;
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: -o-crisp-edges;
-      image-rendering: pixelated;
-      -ms-interpolation-mode: nearest-neighbor;
-		}
 	}
 </style>

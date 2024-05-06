@@ -6,7 +6,9 @@ precision highp float;
 
 uniform vec2 resolution;
 uniform vec2 rotateCamera;
-uniform float rotateStrength;
+uniform float mouseRotateStrength;
+
+uniform float rotateYValue;
 
 uniform vec2 nameTextureSize;
 uniform sampler2D nameTexture;
@@ -117,8 +119,8 @@ float sdName(vec2 p, float scale) {
 float sceneSDF(vec3 pos) {
 	const vec3 s = vec3(300.0);
 
-	pos *= rotateX(-rotateCamera.y * rotateStrength);
-	pos *= rotateY(-rotateCamera.x * rotateStrength);
+	pos *= rotateX(-rotateCamera.y * mouseRotateStrength);
+	pos *= rotateY((-rotateCamera.x * mouseRotateStrength) + (rotateYValue));
 
 	pos = pos - s * round(pos / s);
 
