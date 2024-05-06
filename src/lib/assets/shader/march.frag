@@ -12,7 +12,7 @@ uniform vec2 nameTextureSize;
 uniform sampler2D nameTexture;
 
 #define MAX_STEPS (256)
-#define EPS (0.01)
+#define EPS (0.1)
 #define MAX_DIST (1000.0)
 #define FOG_START (500.0)
 
@@ -165,17 +165,16 @@ void main() {
 		dist = sceneSDF(pos);
 		pos += rayDirection * dist;
 
-		if (pos.z > MAX_DIST) break;
+		if (dist < EPS || pos.z > MAX_DIST) break;
+	}
 
-		if (dist < EPS) {
-			const float CONTRIBUTE_FACTOR = 3.0;
-			vec3 normal = (calculateNormal(pos) + 1.0) / CONTRIBUTE_FACTOR;
+	if (dist < EPS) {
+		const float CONTRIBUTE_FACTOR = 3.0;
+		vec3 normal = (calculateNormal(pos) + 1.0) / CONTRIBUTE_FACTOR;
 
-			float fogPercent = normalize(distance(posStart, pos), FOG_START, MAX_DIST);
+		float fogPercent = normalize(distance(posStart, pos), FOG_START, MAX_DIST);
 
-			gl_FragColor *= fogPercent;
-			gl_FragColor += vec4(vec3(min(0.9, normal.r + normal.g)), 1.0) * (1.0 - fogPercent);
-			break;
-		}
+		gl_FragColor *= fogPercent;
+		gl_FragColor += vec4(vec3(min(0.9, normal.r + normal.g)), 1.0) * (1.0 - fogPercent);
 	}
 }
