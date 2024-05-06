@@ -171,8 +171,6 @@
 	const resizeCanvas = () => {
 		let scale = window.devicePixelRatio;
 
-		if (isMobileAndTablet()) scale = 1.25;
-
 		canvas.width = document.body.clientWidth * scale;
 		canvas.height = window.innerHeight * scale;
 	};
