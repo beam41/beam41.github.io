@@ -12,6 +12,8 @@
 
 	let canvas: HTMLCanvasElement;
 
+	let scale = 1;
+
 	let onScreen = false;
 
 	onMount(() => {
@@ -153,7 +155,7 @@
 	});
 
 	const resizeCanvas = () => {
-		let scale = window.devicePixelRatio;
+		scale = window.devicePixelRatio;
 
 		if (isMobileAndTablet()) scale = 1;
 
@@ -173,11 +175,21 @@
 	});
 </script>
 
-<canvas bind:this={canvas} class="logo" />
+<canvas bind:this={canvas} class="logo" class:no-scale={scale === 1} />
 
 <style lang="scss">
 	.logo {
 		width: 100%;
 		height: 100vh;
+
+		// https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas
+		&.no-scale {
+      image-rendering: optimizeSpeed;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: -o-crisp-edges;
+      image-rendering: pixelated;
+      -ms-interpolation-mode: nearest-neighbor;
+		}
 	}
 </style>
