@@ -177,7 +177,6 @@
 		const run = (timeStamp: number) => {
 			if (timeLastFrame) {
 				if (timeStamp - timeLastFrame > (1 / acceptableFramerate) * 1000) {
-					console.log('framedrop', timeStamp - timeLastFrame);
 					scale = 1;
 				} else {
 					scale = window?.devicePixelRatio;
