@@ -4,7 +4,10 @@ precision mediump float;
 precision highp float;
 #endif
 
+uniform bool isMobile;
+
 uniform vec2 resolution;
+
 uniform vec2 rotateCamera;
 uniform float mouseRotateStrength;
 
@@ -122,7 +125,9 @@ float sceneSDF(vec3 pos) {
 	pos *= rotateX(-rotateCamera.y * mouseRotateStrength);
 	pos *= rotateY(-rotateCamera.x * mouseRotateStrength + rotateYValue);
 
-	pos = pos - s * round(pos / s);
+	if (!isMobile) {
+		pos = pos - s * round(pos / s);
+	}
 
 	float nameDist = opExtrusion(pos, sdName(pos.xy, 5.0), 2.5);
 	float badgeDist = sdRoundBox(pos, vec3(35.0, 12.0, 1.5), 1.0);

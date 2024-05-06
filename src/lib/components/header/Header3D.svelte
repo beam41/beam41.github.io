@@ -111,6 +111,11 @@
 			};
 			image.src = NameImg;
 
+			if (isMobileAndTablet()) {
+				const isMobileHandle = getUniformLocation(gl, program, 'isMobile');
+				gl.uniform1i(isMobileHandle, 1);
+			}
+
 			const resolutionHandle = getUniformLocation(gl, program, 'resolution');
 
 			const mouseRotateStrengthHandle = getUniformLocation(gl, program, 'mouseRotateStrength');
