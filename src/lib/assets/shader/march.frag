@@ -1,10 +1,12 @@
 #ifndef GL_FRAGMENT_PRECISION_HIGH
 precision mediump float;
 #else
+#ifdef MOBILE
+precision mediump float;
+#else
 precision highp float;
 #endif
-
-uniform bool isMobile;
+#endif
 
 uniform vec2 resolution;
 
@@ -16,10 +18,17 @@ uniform float rotateYValue;
 uniform vec2 nameTextureSize;
 uniform sampler2D nameTexture;
 
-#define MAX_STEPS (256)
 #define EPS (0.1)
+
+#ifdef MOBILE
+#define MAX_STEPS (64)
+#define MAX_DIST (600.0)
+#define FOG_START (550.0)
+#else
+#define MAX_STEPS (256)
 #define MAX_DIST (1000.0)
 #define FOG_START (500.0)
+#endif
 
 float round(float a) {
 	return floor(a + 0.5);
@@ -125,9 +134,7 @@ float sceneSDF(vec3 pos) {
 	pos *= rotateX(-rotateCamera.y * mouseRotateStrength);
 	pos *= rotateY(-rotateCamera.x * mouseRotateStrength + rotateYValue);
 
-	if (!isMobile) {
-		pos = pos - s * round(pos / s);
-	}
+	pos = pos - s * round(pos / s);
 
 	float nameDist = opExtrusion(pos, sdName(pos.xy, 5.0), 2.5);
 	float badgeDist = sdRoundBox(pos, vec3(35.0, 12.0, 1.5), 1.0);
@@ -142,11 +149,15 @@ float sceneSDF(vec3 pos) {
 }
 
 vec3 calculateNormal(vec3 pos) {
+	#ifndef MOBILE
 	vec3 vp = vec3(
 		sceneSDF(pos + vec3(EPS, 0.0, 0.0)),
 		sceneSDF(pos + vec3(0.0, EPS, 0.0)),
 		sceneSDF(pos + vec3(0.0, 0.0, EPS))
 	);
+	#else
+	float vp = sceneSDF(pos);
+	#endif
 
 	vec3 vm = vec3(
 		sceneSDF(pos - vec3(EPS, 0.0, 0.0)),

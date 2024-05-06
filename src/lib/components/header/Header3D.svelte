@@ -55,8 +55,13 @@
 				return;
 			}
 
-			const vertexShader = compileShader(gl, MainVertShader, gl.VERTEX_SHADER);
-			const fragmentShader = compileShader(gl, RayMarchFragShader, gl.FRAGMENT_SHADER);
+			const vertexShader = compileShader(gl, MainVertShader, gl.VERTEX_SHADER, isMobileAndTablet());
+			const fragmentShader = compileShader(
+				gl,
+				RayMarchFragShader,
+				gl.FRAGMENT_SHADER,
+				isMobileAndTablet(),
+			);
 
 			const program = gl.createProgram();
 			if (!program) {
@@ -110,11 +115,6 @@
 				gl.uniform2f(nameTextureSizeHandle, image.width, image.height);
 			};
 			image.src = NameImg;
-
-			if (isMobileAndTablet()) {
-				const isMobileHandle = getUniformLocation(gl, program, 'isMobile');
-				gl.uniform1i(isMobileHandle, 1);
-			}
 
 			const resolutionHandle = getUniformLocation(gl, program, 'resolution');
 

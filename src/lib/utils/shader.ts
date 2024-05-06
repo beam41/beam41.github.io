@@ -2,6 +2,7 @@ export function compileShader(
 	gl: WebGLRenderingContext,
 	shaderSource: string,
 	shaderType: WebGLRenderingContext['FRAGMENT_SHADER'] | WebGLRenderingContext['VERTEX_SHADER'],
+	mobileFlag: boolean,
 ) {
 	const shader = gl.createShader(shaderType);
 
@@ -10,7 +11,7 @@ export function compileShader(
 		throw new Error('Cannot create shader');
 	}
 
-	gl.shaderSource(shader, shaderSource);
+	gl.shaderSource(shader, (mobileFlag ? '#define MOBILE\n' : '') + shaderSource);
 	gl.compileShader(shader);
 
 	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
