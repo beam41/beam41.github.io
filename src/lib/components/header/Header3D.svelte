@@ -21,6 +21,7 @@
 	const dispatch = createEventDispatcher<{ glFailed: undefined }>();
 
 	let canvas: HTMLCanvasElement;
+	let measureScreen: HTMLElement;
 
 	let onScreen = false;
 
@@ -126,8 +127,13 @@
 			const rotateYValueHandle = getUniformLocation(gl, program, 'rotateYValue');
 
 			let lastTimeStamp = 0;
+			let currCanvasWidth: number;
+			let currCanvasHeight: number;
 			const run = (timestamp: number) => {
-				if (onScreen && timestamp - lastTimeStamp >= fpsInterval) {
+				const canvasChange = canvas.width !== currCanvasWidth || canvas.height !== currCanvasHeight;
+				currCanvasWidth = canvas.width;
+				currCanvasHeight = canvas.height;
+				if (onScreen && (canvasChange || timestamp - lastTimeStamp >= fpsInterval)) {
 					gl.viewport(0, 0, canvas.width, canvas.height);
 					gl.uniform2f(resolutionHandle, canvas.width, canvas.height);
 
@@ -176,27 +182,36 @@
 	const resizeCanvas = () => {
 		let scale = window.devicePixelRatio;
 
-		canvas.width = document.body.clientWidth * scale;
-		canvas.height = window.innerHeight * scale;
+		canvas.width = measureScreen.clientWidth * scale;
+		canvas.height = measureScreen.clientHeight * scale;
 	};
 
 	onMount(() => {
 		resizeCanvas();
 
-		addEventListener('resize', resizeCanvas, true);
+		const resizeCanvasDebounce = debounce(resizeCanvas, 300);
+
+		addEventListener('resize', resizeCanvasDebounce, true);
 
 		return () => {
-			removeEventListener('resize', resizeCanvas, true);
+			removeEventListener('resize', resizeCanvasDebounce, true);
 		};
 	});
 </script>
 
+<div bind:this={measureScreen} class="measure-screen"></div>
 <canvas bind:this={canvas} class="logo" />
 
 <style lang="scss">
-	.logo {
+	.logo,
+	.measure-screen {
 		width: 100%;
 		height: 100vh;
-		height: 100dvh;
+		height: 100svh;
+	}
+
+	.measure-screen {
+		position: fixed;
+		z-index: -1;
 	}
 </style>
