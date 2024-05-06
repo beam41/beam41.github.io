@@ -6,12 +6,9 @@
 	import { compileShader, getAttribLocation, getUniformLocation } from '$lib/utils/shader';
 	import { clamp } from '$lib/utils/number';
 	import { debounce } from '$lib/utils/debounce';
-
-	const acceptableFramerate = 60 as const;
+	import { isMobileAndTablet } from '$lib/utils/userAgent';
 
 	const dispatch = createEventDispatcher<{ glFailed: undefined }>();
-
-	let scale = 1;
 
 	let canvas: HTMLCanvasElement;
 
@@ -156,6 +153,10 @@
 	});
 
 	const resizeCanvas = () => {
+		let scale = window.devicePixelRatio;
+
+		if (isMobileAndTablet()) scale = 1;
+
 		canvas.width = document.body.clientWidth * scale;
 		canvas.height = window.innerHeight * scale;
 	};
@@ -168,29 +169,6 @@
 
 		return () => {
 			removeEventListener('resize', debouncedResize, true);
-		};
-	});
-
-	onMount(() => {
-		let animId: number;
-		let timeLastFrame: number;
-		const run = (timeStamp: number) => {
-			if (timeLastFrame) {
-				if (timeStamp - timeLastFrame > (1 / acceptableFramerate) * 1000) {
-					scale = 1;
-				} else {
-					scale = window?.devicePixelRatio;
-				}
-				resizeCanvas();
-			}
-			timeLastFrame = timeStamp;
-			animId = requestAnimationFrame(run);
-		};
-
-		animId = requestAnimationFrame(run);
-
-		return () => {
-			cancelAnimationFrame(animId);
 		};
 	});
 </script>
