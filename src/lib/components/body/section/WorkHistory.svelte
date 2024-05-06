@@ -17,12 +17,24 @@
 
 	const works: readonly WorkPlace[] = [
 		{
+			place: 'EveryMatrix',
+			title: [
+				{
+					name: 'Middle Frontend Developer',
+					type: 'Full-time',
+					start: dayjs('2023-09'),
+				},
+			],
+			desc: 'Worked on project using React',
+		},
+		{
 			place: 'Manao Software',
 			title: [
 				{
 					name: 'Mid-Level Web Developer',
 					type: 'Full-time',
 					start: dayjs('2022-04'),
+					end: dayjs('2023-09'),
 				},
 				{
 					name: 'Junior Developer',

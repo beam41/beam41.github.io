@@ -10,10 +10,14 @@
 			use3dHeader = false;
 		}
 	});
+
+	function useFallback() {
+		use3dHeader = false;
+	}
 </script>
 
 {#if use3dHeader}
-	<Header3D />
+	<Header3D on:glFailed={useFallback} />
 {:else}
 	<HeaderSvg />
 {/if}
