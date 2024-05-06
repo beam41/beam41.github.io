@@ -14,7 +14,7 @@ uniform sampler2D nameTexture;
 #define MAX_STEPS (256)
 #define EPS (0.01)
 #define MAX_DIST (1000.0)
-#define FOG_START (500.)
+#define FOG_START (500.0)
 
 float round(float a) {
 	return floor(a + 0.5);
@@ -25,7 +25,7 @@ vec3 round(vec3 a) {
 }
 
 float normalize(float a, float minVal, float maxVal) {
-	return clamp((a-minVal)/(maxVal-minVal), 0., 1.);
+	return clamp((a - minVal) / (maxVal - minVal), 0.0, 1.0);
 }
 
 // https://iquilezles.org/articles/distfunctions/
@@ -114,13 +114,13 @@ float sdName(vec2 p, float scale) {
 	return -signedDistance;
 }
 
-float sceneSDF(in vec3 pos) {
-	const vec3 s = vec3(300.);
+float sceneSDF(vec3 pos) {
+	const vec3 s = vec3(300.0);
 
 	pos *= rotateX(-rotateCamera.y * rotateStrength);
 	pos *= rotateY(-rotateCamera.x * rotateStrength);
 
-	pos = pos - s*round(pos/s);
+	pos = pos - s * round(pos / s);
 
 	float nameDist = opExtrusion(pos, sdName(pos.xy, 5.0), 2.5);
 	float badgeDist = sdRoundBox(pos, vec3(35.0, 12.0, 1.5), 1.0);
@@ -151,7 +151,7 @@ vec3 calculateNormal(vec3 pos) {
 }
 
 void main() {
-	gl_FragColor = vec4(1.);
+	gl_FragColor = vec4(1.0);
 	vec2 uv = gl_FragCoord.xy * 2.0;
 	uv = (uv - resolution.xy) / min(resolution.x, resolution.y);
 
@@ -174,7 +174,7 @@ void main() {
 			float fogPercent = normalize(distance(posStart, pos), FOG_START, MAX_DIST);
 
 			gl_FragColor *= fogPercent;
-			gl_FragColor += vec4(vec3(min(0.9, normal.r + normal.g)), 1.0) * (1.-fogPercent);
+			gl_FragColor += vec4(vec3(min(0.9, normal.r + normal.g)), 1.0) * (1.0 - fogPercent);
 			break;
 		}
 	}
