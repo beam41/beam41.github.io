@@ -180,10 +180,10 @@ void main() {
         if (pos.z > MAX_DIST) break;
 
         if (dist < EPS) {
-            const float CONTRIBUTE_FACTOR = 3.5;
+            const float CONTRIBUTE_FACTOR = 3.;
             vec3 normal = (calculateNormal(pos) + 1.) / CONTRIBUTE_FACTOR;
 
-            gl_FragColor = vec4(vec3(normal.r + normal.g), 1.);
+            gl_FragColor = vec4(vec3(min(0.9, normal.r + normal.g)), 1.);
             break;
         }
     }
