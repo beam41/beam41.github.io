@@ -7,7 +7,11 @@
 	import { clamp } from '$lib/utils/number';
 	import { debounce } from '$lib/utils/debounce';
 
+	const acceptableFramerate = 60 as const;
+
 	const dispatch = createEventDispatcher<{ glFailed: undefined }>();
+
+	let scale = 1;
 
 	let canvas: HTMLCanvasElement;
 
@@ -130,17 +134,19 @@
 		};
 	});
 
+	const detectMouseMove = (event: MouseEvent | TouchEvent) => {
+		const centerX = document.body.clientWidth / 2;
+		const centerY = window.innerHeight / 2;
+
+		const pageX = (event as MouseEvent).pageX ?? (event as TouchEvent).touches[0]?.pageX;
+		const pageY = (event as MouseEvent).pageY ?? (event as TouchEvent).touches[0]?.pageY;
+
+		mousePosNormX = clamp(-1, 1, (centerX - pageX) / centerX);
+		mousePosNormY = clamp(-1, 1, (centerY - pageY) / centerY);
+	};
+
 	onMount(() => {
-		const detectMouseMove = (event: MouseEvent | TouchEvent) => {
-			const centerX = document.body.clientWidth / 2;
-			const centerY = window.innerHeight / 2;
 
-			const pageX = (event as MouseEvent).pageX ?? (event as TouchEvent).touches[0]?.pageX;
-			const pageY = (event as MouseEvent).pageY ?? (event as TouchEvent).touches[0]?.pageY;
-
-			mousePosNormX = clamp(-1, 1, (centerX - pageX) / centerX);
-			mousePosNormY = clamp(-1, 1, (centerY - pageY) / centerY);
-		};
 		addEventListener('mousemove', detectMouseMove, true);
 		addEventListener('touchmove', detectMouseMove, true);
 
@@ -150,22 +156,44 @@
 		};
 	});
 
+	const resizeCanvas = () => {
+		canvas.width = document.body.clientWidth * scale;
+		canvas.height = window.innerHeight * scale;
+	};
+
+
 	onMount(() => {
-		const resizeCanvas = () => {
-			const scale = window.devicePixelRatio;
-
-			canvas.width = document.body.clientWidth * scale;
-			canvas.height = window.innerHeight * scale;
-		};
-
 		resizeCanvas();
-
 		const debouncedResize = debounce(resizeCanvas, 200);
 
 		addEventListener('resize', debouncedResize, true);
 
 		return () => {
 			removeEventListener('resize', debouncedResize, true);
+		};
+	});
+
+	onMount(() => {
+		let animId: number;
+		let timeLastFrame: number;
+			const run = (timeStamp: number) => {
+				if (timeLastFrame) {
+					if (timeStamp - timeLastFrame > (1/acceptableFramerate) * 1000) {
+						console.log("framedrop", timeStamp - timeLastFrame)
+						scale = 1
+					} else {
+						scale = window?.devicePixelRatio
+					}
+					resizeCanvas()
+				}
+				timeLastFrame = timeStamp;
+				animId = requestAnimationFrame(run);
+			};
+
+			animId = requestAnimationFrame(run);
+
+		return () => {
+			cancelAnimationFrame(animId);
 		};
 	});
 </script>
