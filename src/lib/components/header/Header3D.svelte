@@ -5,13 +5,11 @@
 	import NameImg from '$lib/assets/image/name.png';
 	import { compileShader, getAttribLocation, getUniformLocation } from '$lib/utils/shader';
 	import { clamp } from '$lib/utils/number';
-	import {debounce} from '$lib/utils/debounce';
+	import { debounce } from '$lib/utils/debounce';
 
 	const dispatch = createEventDispatcher<{ glFailed: undefined }>();
 
 	let canvas: HTMLCanvasElement;
-	let canvasUnscaleWidth = 0;
-	let canvasUnscaleHeight = 0;
 
 	let onScreen = false;
 
@@ -105,7 +103,6 @@
 
 			const resolutionHandle = getUniformLocation(gl, program, 'resolution');
 
-
 			const rotateStrengthHandle = getUniformLocation(gl, program, 'rotateStrength');
 			gl.uniform1f(rotateStrengthHandle, rotateStrength);
 
@@ -138,8 +135,8 @@
 			const centerX = document.body.clientWidth / 2;
 			const centerY = window.innerHeight / 2;
 
-			const pageX = (event as MouseEvent).pageX ?? (event as TouchEvent).touches[0]?.pageX
-			const pageY = (event as MouseEvent).pageY ?? (event as TouchEvent).touches[0]?.pageY
+			const pageX = (event as MouseEvent).pageX ?? (event as TouchEvent).touches[0]?.pageX;
+			const pageY = (event as MouseEvent).pageY ?? (event as TouchEvent).touches[0]?.pageY;
 
 			mousePosNormX = clamp(-1, 1, (centerX - pageX) / centerX);
 			mousePosNormY = clamp(-1, 1, (centerY - pageY) / centerY);

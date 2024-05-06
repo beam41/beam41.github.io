@@ -75,7 +75,7 @@
 		.content-header {
 			box-sizing: border-box;
 			margin: 0;
-      padding: 0 16px;
+			padding: 0 16px;
 			position: absolute;
 			width: 100%;
 			text-align: center;

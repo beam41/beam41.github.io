@@ -142,7 +142,7 @@ vec3 calculateNormal(vec3 pos) {
 }
 
 void main() {
-	gl_FragColor = vec4(1.);
+	gl_FragColor = vec4(1.0);
 
 	vec2 uv = gl_FragCoord.xy * 2.0;
 	uv = (uv - resolution.xy) / min(resolution.x, resolution.y);
