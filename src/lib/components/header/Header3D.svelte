@@ -51,12 +51,13 @@
 				return;
 			}
 
-			const vertexShader = compileShader(gl, MainVertShader, gl.VERTEX_SHADER, isMobileAndTablet());
+			const vertexShader = compileShader(gl, MainVertShader, gl.VERTEX_SHADER);
 			const fragmentShader = compileShader(
 				gl,
 				RayMarchFragShader,
 				gl.FRAGMENT_SHADER,
 				isMobileAndTablet(),
+				window.devicePixelRatio >= 2,
 			);
 
 			const program = gl.createProgram();

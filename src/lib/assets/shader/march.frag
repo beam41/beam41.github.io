@@ -22,7 +22,11 @@ uniform sampler2D nameTexture;
 #define AA (1)
 #define MAX_STEPS (128)
 #else
+#ifndef HI_DPI
 #define AA (3)
+#else
+#define AA (2)
+#endif
 #define MAX_STEPS (256)
 #endif
 
@@ -43,10 +47,10 @@ float sdSphere(vec3 p, float s) {
 	return length(p) - s;
 }
 
-float sdBox(vec2 p, vec2 b) {
-	vec2 d = abs(p) - b;
-	return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
-}
+//float sdBox(vec2 p, vec2 b) {
+//	vec2 d = abs(p) - b;
+//	return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
+//}
 
 float sdBox(vec3 p, vec3 b) {
 	vec3 q = abs(p) - b;
@@ -58,21 +62,21 @@ float sdRoundBox(vec3 p, vec3 b, float r) {
 	return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0) - r;
 }
 
-float opUnion(float d1, float d2) {
-	return min(d1, d2);
-}
+//float opUnion(float d1, float d2) {
+//	return min(d1, d2);
+//}
 
-float opSubtraction(float d1, float d2) {
-	return max(-d1, d2);
-}
+//float opSubtraction(float d1, float d2) {
+//	return max(-d1, d2);
+//}
 
-float opIntersection(float d1, float d2) {
-	return max(d1, d2);
-}
+//float opIntersection(float d1, float d2) {
+//	return max(d1, d2);
+//}
 
-float opXor(float d1, float d2) {
-	return max(min(d1, d2), -max(d1, d2));
-}
+//float opXor(float d1, float d2) {
+//	return max(min(d1, d2), -max(d1, d2));
+//}
 
 // https://www.shadertoy.com/view/4tcGDr
 mat3 rotateX(float theta) {
@@ -87,21 +91,21 @@ mat3 rotateY(float theta) {
 	return mat3(vec3(c, 0, s), vec3(0, 1, 0), vec3(-s, 0, c));
 }
 
-mat3 rotateZ(float theta) {
-	float c = cos(theta);
-	float s = sin(theta);
-	return mat3(vec3(c, -s, 0), vec3(s, c, 0), vec3(0, 0, 1));
-}
+//mat3 rotateZ(float theta) {
+//	float c = cos(theta);
+//	float s = sin(theta);
+//	return mat3(vec3(c, -s, 0), vec3(s, c, 0), vec3(0, 0, 1));
+//}
 
 float opSmoothUnion(float d1, float d2, float k) {
 	float h = clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0);
 	return mix(d2, d1, h) - k * h * (1.0 - h);
 }
 
-float opSmoothSubtraction(float d1, float d2, float k) {
-	float h = clamp(0.5 - 0.5 * (d2 + d1) / k, 0.0, 1.0);
-	return mix(d2, -d1, h) + k * h * (1.0 - h);
-}
+//float opSmoothSubtraction(float d1, float d2, float k) {
+//	float h = clamp(0.5 - 0.5 * (d2 + d1) / k, 0.0, 1.0);
+//	return mix(d2, -d1, h) + k * h * (1.0 - h);
+//}
 
 float opSmoothIntersection(float d1, float d2, float k) {
 	float h = clamp(0.5 - 0.5 * (d2 - d1) / k, 0.0, 1.0);
