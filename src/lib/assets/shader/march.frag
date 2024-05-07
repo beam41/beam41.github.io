@@ -1,11 +1,7 @@
 #ifndef GL_FRAGMENT_PRECISION_HIGH
 precision mediump float;
 #else
-#ifdef MOBILE
-precision mediump float;
-#else
 precision highp float;
-#endif
 #endif
 
 uniform vec2 resolution;
@@ -19,15 +15,14 @@ uniform vec2 nameTextureSize;
 uniform sampler2D nameTexture;
 
 #define EPS (0.1)
+#define MAX_DIST (1000.0)
+#define FOG_START (500.0)
 
 #ifdef MOBILE
 #define MAX_STEPS (128)
-#define MAX_DIST (600.0)
-#define FOG_START (550.0)
 #else
+#define AA (3)
 #define MAX_STEPS (256)
-#define MAX_DIST (1000.0)
-#define FOG_START (500.0)
 #endif
 
 float round(float a) {
@@ -50,6 +45,11 @@ float sdSphere(vec3 p, float s) {
 float sdBox(vec2 p, vec2 b) {
 	vec2 d = abs(p) - b;
 	return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
+}
+
+float sdBox(vec3 p, vec3 b) {
+	vec3 q = abs(p) - b;
+	return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0);
 }
 
 float sdRoundBox(vec3 p, vec3 b, float r) {
@@ -136,7 +136,14 @@ float sceneSDF(vec3 pos) {
 
 	pos = pos - s * round(pos / s);
 
+	// this help with performance so much
+	// mainly because it skip sdName check which confuse raymarch somehow
+	// not perfect method but work fine enough
+	float boundingBox = sdBox(pos, vec3(35.0, 12.0, 2.5) + 1.0);
+	if (boundingBox > 1.0) return boundingBox;
+
 	float nameDist = opExtrusion(pos, sdName(pos.xy, 5.0), 2.5);
+
 	float badgeDist = sdRoundBox(pos, vec3(35.0, 12.0, 1.5), 1.0);
 
 	float revealSpereDist = sdSphere(pos, (length(rotateCamera) + abs(rotateYValue)) * 80.0);
@@ -169,30 +176,42 @@ vec3 calculateNormal(vec3 pos) {
 }
 
 void main() {
-	gl_FragColor = vec4(1.0);
-	vec2 uv = gl_FragCoord.xy * 2.0;
-	uv = (uv - resolution.xy) / min(resolution.x, resolution.y);
+	vec4 color = vec4(0.0);
+	#if AA > 1
+	for (int m = 0; m < AA; m++)
+		for (int n = 0; n < AA; n++) {
+			vec2 o = vec2(float(m), float(n)) / float(AA) - 0.5;
+			vec2 uv = (gl_FragCoord.xy + o) * 2.0;
+			#else
+			vec2 uv = gl_FragCoord.xy * 2.0;
+			#endif
+			uv = (uv - resolution.xy) / min(resolution.x, resolution.y);
 
-	vec3 pos = vec3(0.0, 0.0, -100.0);
-	vec3 posStart = pos;
-	vec3 rayDirection = normalize(vec3(uv, 2));
+			vec3 pos = vec3(0.0, 0.0, -100.0);
+			vec3 posStart = pos;
+			vec3 rayDirection = normalize(vec3(uv, 2));
 
-	// ray marching
-	float dist = EPS;
-	for (int i = 0; i < MAX_STEPS; i++) {
-		dist = sceneSDF(pos);
-		pos += rayDirection * dist;
+			// ray marching
+			float dist = EPS;
+			for (int i = 0; i < MAX_STEPS; i++) {
+				dist = sceneSDF(pos);
+				pos += rayDirection * dist;
 
-		if (dist < EPS || pos.z > MAX_DIST) break;
-	}
+				if (dist < EPS || pos.z > MAX_DIST) break;
+			}
 
-	if (dist < EPS) {
-		const float CONTRIBUTE_FACTOR = 3.0;
-		vec3 normal = (calculateNormal(pos) + 1.0) / CONTRIBUTE_FACTOR;
+			if (dist < EPS) {
+				const float CONTRIBUTE_FACTOR = 3.0;
+				vec3 normal = (calculateNormal(pos) + 1.0) / CONTRIBUTE_FACTOR;
 
-		float fogPercent = normalize(distance(posStart, pos), FOG_START, MAX_DIST);
+				float fogPercent = normalize(distance(posStart, pos), FOG_START, MAX_DIST);
 
-		gl_FragColor *= fogPercent;
-		gl_FragColor += vec4(vec3(min(0.9, normal.r + normal.g)), 1.0) * (1.0 - fogPercent);
-	}
+				color += vec4(vec3(normal.r + normal.g), 1.0) * (1.0 - fogPercent);
+			}
+
+			#if AA > 1
+		}
+	color /= float(AA * AA);
+	#endif
+	gl_FragColor = vec4(1.0) * (1.0 - color.a) + color;
 }

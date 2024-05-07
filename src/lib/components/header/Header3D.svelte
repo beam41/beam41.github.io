@@ -11,19 +11,14 @@
 
 	const MOUSE_ROTATE_STRENGTH = 0.5 as const;
 
-	let fpsInterval = 1000 / 60;
-	onMount(() => {
-		if (isMobileAndTablet()) {
-			fpsInterval = 1000 / 30;
-		}
-	});
-
 	const dispatch = createEventDispatcher<{ glFailed: undefined }>();
 
 	let canvas: HTMLCanvasElement;
 	let measureScreen: HTMLElement;
 
 	let onScreen = false;
+
+	let glResize: (() => void) | undefined;
 
 	onMount(() => {
 		let observer = new IntersectionObserver((entries) => {
@@ -126,23 +121,18 @@
 
 			const rotateYValueHandle = getUniformLocation(gl, program, 'rotateYValue');
 
-			let lastTimeStamp = 0;
-			let currCanvasWidth: number;
-			let currCanvasHeight: number;
-			const run = (timestamp: number) => {
-				const canvasChange = canvas.width !== currCanvasWidth || canvas.height !== currCanvasHeight;
-				currCanvasWidth = canvas.width;
-				currCanvasHeight = canvas.height;
-				if (onScreen && (canvasChange || timestamp - lastTimeStamp >= fpsInterval)) {
-					gl.viewport(0, 0, canvas.width, canvas.height);
-					gl.uniform2f(resolutionHandle, canvas.width, canvas.height);
+			glResize = () => {
+				gl.viewport(0, 0, canvas.width, canvas.height);
+				gl.uniform2f(resolutionHandle, canvas.width, canvas.height);
+			};
 
+			const run = (timestamp: number) => {
+				if (onScreen) {
 					const rotateY = pingpongLoop(-0.5, 0.5, 0, 40000, 0, timestamp, easeInOutSine);
 					gl.uniform1f(rotateYValueHandle, rotateY);
 
 					gl.uniform2f(rotateCameraHandle, mousePosNormX, mousePosNormY);
 					gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-					lastTimeStamp = timestamp;
 				}
 
 				runId = requestAnimationFrame(run);
@@ -184,6 +174,8 @@
 
 		canvas.width = measureScreen.clientWidth * scale;
 		canvas.height = measureScreen.clientHeight * scale;
+
+		glResize?.();
 	};
 
 	onMount(() => {

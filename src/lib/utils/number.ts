@@ -3,7 +3,7 @@ export function lerp(a: number, b: number, t: number) {
 }
 
 export function normalize(a: number, b: number, t: number) {
-	return (clamp(a, b, t) - a) / (b - a);
+	return clamp(0.0, 1.0, (t - a) / (b - a));
 }
 
 export function clamp(a: number, b: number, t: number) {

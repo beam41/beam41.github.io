@@ -118,26 +118,4 @@
 			min-width: 0;
 		}
 	}
-
-	@media print {
-		.divider {
-			width: 100% !important;
-		}
-
-		.content {
-			width: 100% !important;
-			opacity: 1 !important;
-			transform: translateY(0) !important;
-
-			.content-body {
-				max-width: 100% !important;
-			}
-
-			&:last-child {
-				.content-body-wrapper {
-					padding: 48px 16px 0 !important;
-				}
-			}
-		}
-	}
 </style>

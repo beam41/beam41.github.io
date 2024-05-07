@@ -6,7 +6,6 @@
 		rel="noopener"
 		target="_blank">source code</a
 	>
-	<div class="print">beam41.github.io</div>
 </footer>
 
 <style lang="scss">
@@ -33,25 +32,6 @@
 				text-decoration-color: white;
 				transition: text-decoration-color 0s;
 			}
-		}
-	}
-
-	.print {
-		display: none;
-	}
-
-	@media print {
-		.screen {
-			display: none;
-		}
-
-		.print {
-			display: initial;
-		}
-
-		.footer {
-			position: absolute;
-			bottom: 0;
 		}
 	}
 </style>
