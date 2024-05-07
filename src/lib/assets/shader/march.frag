@@ -19,6 +19,7 @@ uniform sampler2D nameTexture;
 #define FOG_START (500.0)
 
 #ifdef MOBILE
+#define AA (1)
 #define MAX_STEPS (128)
 #else
 #define AA (3)
