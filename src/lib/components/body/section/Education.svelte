@@ -21,10 +21,10 @@
 </script>
 
 {#each educations as ed}
-	<div class="education-item">
+	<div class="educationItem">
 		<h2 class="info uni">{ed.name}</h2>
 		<h3 class="info degree">{ed.degree}</h3>
-		<h4 class="info year-grade">
+		<h4 class="info yearGrade">
 			{ed.yearStart} &#8211; {ed.yearEnd} | Grade: {ed.grade}
 		</h4>
 		<p class="desc">{ed.desc}</p>
@@ -39,7 +39,7 @@
 		font-weight: normal;
 		color: rgb(85, 85, 85);
 	}
-	.year-grade {
+	.yearGrade {
 		font-size: 0.8em;
 	}
 

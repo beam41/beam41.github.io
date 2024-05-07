@@ -1,78 +1,25 @@
 <script lang="ts">
 	import dayjs from 'dayjs';
 	import { durationToString } from '$lib/utils/date';
+	import SkillPills from '$lib/components/body/section/SkillPills.svelte';
+	import { type WorkPlace, works } from '$lib/components/body/section/workSkill';
 
-	type WorkType = 'Full-time' | 'Intern';
-	type Title = {
-		readonly name: string;
-		readonly type: WorkType;
-		readonly start: dayjs.Dayjs;
-		readonly end?: dayjs.Dayjs;
-	};
-	type WorkPlace = {
-		readonly place: string;
-		readonly title: Title[];
-		readonly desc?: string;
-	};
-
-	const works: readonly WorkPlace[] = [
-		{
-			place: 'EveryMatrix',
-			title: [
-				{
-					name: 'Middle Frontend Developer',
-					type: 'Full-time',
-					start: dayjs('2023-09'),
-				},
-			],
-			desc: 'Worked on project using React',
-		},
-		{
-			place: 'Manao Software',
-			title: [
-				{
-					name: 'Mid-Level Web Developer',
-					type: 'Full-time',
-					start: dayjs('2022-04'),
-					end: dayjs('2023-09'),
-				},
-				{
-					name: 'Junior Developer',
-					type: 'Full-time',
-					start: dayjs('2021-04'),
-					end: dayjs('2022-03'),
-				},
-			],
-			desc: 'Worked on project using C# (ASP.NET Core) and JavaScript (React, Angular)',
-		},
-		{
-			place: 'Artisan Digital',
-			title: [
-				{
-					name: 'Frontend Developer',
-					type: 'Intern',
-					start: dayjs('2021-05'),
-					end: dayjs('2021-10'),
-				},
-			],
-			desc: 'Worked on project using Vue.js',
-		},
-	];
+	function sortWorkSkill(work: WorkPlace) {
+		return [...work.skillsLang.toSorted(), ...work.skillsFramework.toSorted()];
+	}
 </script>
 
-<div class="work-wrapper">
+<div class="workWrapper">
 	{#each works as work}
 		<div>
 			<h2 class="head place">{work.place}</h2>
-			{#if work.desc}
-				<p class="head desc">
-					{work.desc}
-				</p>
-			{/if}
-			<div class="head total-time">
+			<div class="head skill">
+				<SkillPills small skills={sortWorkSkill(work)} />
+			</div>
+			<div class="head totalTime">
 				{durationToString(work.title.at(-1)?.start ?? dayjs(), work.title.at(0)?.end ?? dayjs())}
 			</div>
-			<div class="title-wrap">
+			<div class="titleWrap">
 				{#each work.title as title}
 					<h3 class="title">
 						<span class="name">
@@ -91,7 +38,7 @@
 </div>
 
 <style lang="scss">
-	.work-wrapper {
+	.workWrapper {
 		margin-top: -32px;
 	}
 
@@ -103,7 +50,7 @@
 		margin-top: 32px;
 	}
 
-	.total-time {
+	.totalTime {
 		font-size: 0.9rem;
 	}
 

@@ -1,92 +1,42 @@
 <script lang="ts">
-	const productionSkillsLang = [
-		'C#',
-		'JavaScript',
-		'TypeScript',
-		'HTML',
-		'CSS',
-		'SQL',
-		'GraphQL',
-	] as const;
-
-	const productionSkillsFramework = [
-		'ASP.NET Core',
-		'Angular',
-		'React',
-		'Vue.js',
-		'Express.js',
-		'AdonisJS',
-		'MongoDB',
-	] as const;
-
-	const hobbySkillsLang = ['Go', 'Python', 'Dart', 'C++'] as const;
-
-	const hobbySkillsFramework = ['Flask', 'OpenCV', 'Flutter', 'Unity', 'Docker'] as const;
+	import {
+		hobbySkillsFramework,
+		hobbySkillsLang,
+		productionSkillsFramework,
+		productionSkillsLang,
+	} from '$lib/components/body/section/workSkill';
+	import SkillPills from '$lib/components/body/section/SkillPills.svelte';
 </script>
 
-<div class="skill-wrapper">
-	<div class="skill-info">
-		<h2 class="skill-head">Experienced</h2>
-		<div class="skills">
-			{#each productionSkillsLang as skill}
-				<span>{skill}</span>
-			{/each}
-		</div>
-		<div class="skills bot">
-			{#each productionSkillsFramework as skill}
-				<span>{skill}</span>
-			{/each}
-		</div>
+<div class="skillWrapper">
+	<div class="skillInfo">
+		<h2 class="skillHead">Experienced</h2>
+		<SkillPills skills={productionSkillsLang} />
+		<div class="padding"></div>
+		<SkillPills skills={productionSkillsFramework} />
 	</div>
 
-	<div class="skill-info">
-		<h2 class="skill-head">Knows</h2>
-		<div class="skills">
-			{#each hobbySkillsLang as skill}
-				<span>{skill}</span>
-			{/each}
-		</div>
-		<div class="skills bot">
-			{#each hobbySkillsFramework as skill}
-				<span>{skill}</span>
-			{/each}
-		</div>
+	<div class="skillInfo">
+		<h2 class="skillHead">Knows</h2>
+		<SkillPills skills={hobbySkillsLang} />
+		<div class="padding"></div>
+		<SkillPills skills={hobbySkillsFramework} />
 	</div>
 </div>
 
 <style lang="scss">
-	.skill-wrapper {
+	.skillWrapper {
 		margin-top: -32px;
 	}
-	.skill-info {
+	.skillInfo {
 		margin-top: 32px;
-	}
-	.skill-head {
-		margin: 0 0 12px;
-		font-size: 1.17em;
-	}
 
-	.skills {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		margin: -4px -4px;
-		color: rgb(95, 95, 95);
-		font: {
-			size: 0.8em;
-			weight: bold;
-		}
-
-		& > span {
-			white-space: nowrap;
-			margin: 4px 4px;
-			padding: 4px 18px;
-			border-radius: 100px;
-			background: rgb(240, 240, 240);
-		}
-
-		&.bot {
+		.padding {
 			margin-top: 8px;
 		}
+	}
+	.skillHead {
+		margin: 0 0 12px;
+		font-size: 1.17em;
 	}
 </style>

@@ -32,13 +32,13 @@
 	];
 </script>
 
-<div class="award-wrapper">
+<div class="awardWrapper">
 	{#each awards as award}
-		<div class="award-item">
+		<div class="awardItem">
 			<h2 class="award">
 				<svelte:element
 					this={award.link ? 'a' : 'span'}
-					class="award-inner"
+					class="awardInner"
 					href={award.link}
 					target={award.link && '_blank'}
 					rel={award.link && 'noopener'}
@@ -46,7 +46,7 @@
 					{award.name}
 				</svelte:element>
 			</h2>
-			<div class="info-date">
+			<div class="infoDate">
 				<span class="info">{award.info ? `${award.info}` : ''}</span>
 				{#if award.info}|{/if}
 				{award.date.format('MMMM YYYY')}
@@ -56,7 +56,7 @@
 </div>
 
 <style lang="scss">
-	.award-wrapper {
+	.awardWrapper {
 		margin-top: -32px;
 	}
 
@@ -64,7 +64,7 @@
 		margin: 32px 0 8px;
 		font-size: 1.17em;
 
-		a.award-inner {
+		a.awardInner {
 			color: currentColor;
 			transition: text-decoration-color 0.25s;
 			text-decoration-color: white;
@@ -76,7 +76,7 @@
 		}
 	}
 
-	.info-date {
+	.infoDate {
 		font-size: 0.9em;
 	}
 

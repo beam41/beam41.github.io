@@ -192,18 +192,18 @@
 	});
 </script>
 
-<div bind:this={measureScreen} class="measure-screen"></div>
+<div bind:this={measureScreen} class="measureScreen"></div>
 <canvas bind:this={canvas} class="logo" />
 
 <style lang="scss">
 	.logo,
-	.measure-screen {
+	.measureScreen {
 		width: 100%;
 		height: 100vh;
 		height: 100svh;
 	}
 
-	.measure-screen {
+	.measureScreen {
 		position: fixed;
 		z-index: -1;
 	}

@@ -43,14 +43,14 @@
 <section
 	class="content"
 	class:hidden={!visible}
-	class:overridden-hidden={visible && !overrideVisible}
+	class:overriddenHidden={visible && !overrideVisible}
 	bind:this={contentObserver}
 >
-	<h1 class="content-header">
+	<h1 class="contentHeader">
 		<span>{title}</span>
 	</h1>
-	<div class="content-body-wrapper">
-		<div class="content-body">
+	<div class="contentBodyWrapper">
+		<div class="contentBody">
 			<slot />
 		</div>
 	</div>
@@ -72,7 +72,7 @@
 
 		position: relative;
 		transition: all 250ms ease-in;
-		.content-header {
+		.contentHeader {
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0 16px;
@@ -80,18 +80,18 @@
 			width: 100%;
 			text-align: center;
 			transform: translateY(calc(-50% - 4px));
-			color: rgb(71, 71, 71);
+			color: rgb(66, 66, 66);
 			& > span {
 				background: white;
 				padding: 0 2px;
 			}
 		}
-		.content-body-wrapper {
+		.contentBodyWrapper {
 			box-sizing: border-box;
 			padding: 48px 16px 80px;
 			text-align: center;
 
-			.content-body {
+			.contentBody {
 				margin: auto;
 				max-width: 600px;
 			}
@@ -102,7 +102,7 @@
 			transform: translateY(25px);
 		}
 
-		&.overridden-hidden {
+		&.overriddenHidden {
 			opacity: 0;
 			transition: all 125ms ease-out;
 		}
