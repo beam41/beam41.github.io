@@ -49,7 +49,7 @@
 			margin: 4px 4px;
 			padding: 4px 18px;
 			border-radius: 100px;
-			background: rgb(#264de4);
+			background: rgb(240, 240, 240);
 			transition: background 250ms ease-in-out;
 
 			&:hover {
