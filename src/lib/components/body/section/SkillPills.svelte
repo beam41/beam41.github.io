@@ -15,7 +15,7 @@
 <style lang="scss">
 	@use 'sass:math';
 	@use 'sass:color';
-	@use '../../../assets/styles/apca';
+	@use '$lib/assets/styles/apca';
 
 	@mixin gen-color-background($bg-color) {
 		$bg-color-y: apca.srgb-to-y($bg-color);
