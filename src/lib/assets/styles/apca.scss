@@ -2,79 +2,79 @@
 @use 'sass:math';
 
 // APCA - Advanced Perceptual Contrast Algorithm - Beta 0.98G-4g
-$mainTRC: 2.4;
+$main-trc: 2.4;
 
-$sRco: 0.2126729;
-$sGco: 0.7151522;
-$sBco: 0.072175;
+$sr-co: 0.2126729;
+$sg-co: 0.7151522;
+$sb-co: 0.072175;
 
-$normBG: 0.56;
-$normTXT: 0.57;
-$revTXT: 0.62;
-$revBG: 0.65;
+$norm-bg: 0.56;
+$norm-txt: 0.57;
+$rev-txt: 0.62;
+$rev-bg: 0.65;
 
-$blkThrs: 0.022;
-$blkClmp: 1.414;
-$scaleBoW: 1.14;
-$scaleWoB: 1.14;
-$loBoWthresh: 0.035991;
-$loWoBthresh: 0.035991;
-$loBoWfactor: 27.7847239587675;
-$loWoBfactor: 27.7847239587675;
-$loBoWoffset: 0.027;
-$loWoBoffset: 0.027;
-$loClip: 0.001;
-$deltaYmin: 0.0005;
+$blk-thrs: 0.022;
+$blk-clmp: 1.414;
+$scale-bow: 1.14;
+$scale-wob: 1.14;
+$lo-bow-thresh: 0.035991;
+$lo-wob-thresh: 0.035991;
+$lo-bow-factor: 27.7847239587675;
+$lo-bow-factor: 27.7847239587675;
+$lo-bow-offset: 0.027;
+$lo-wob-offset: 0.027;
+$lo-clip: 0.001;
+$delta-y-min: 0.0005;
 
-@function sRGBtoY($sRGBcolor) {
-	$r: color.red($sRGBcolor);
-	$g: color.green($sRGBcolor);
-	$b: color.blue($sRGBcolor);
+@function srgb-to-y($srgb-color) {
+	$r: color.red($srgb-color);
+	$g: color.green($srgb-color);
+	$b: color.blue($srgb-color);
 
-	$rCoeff: $sRco * math.pow(math.div($r, 255), $mainTRC);
-	$gCoeff: $sGco * math.pow(math.div($g, 255), $mainTRC);
-	$bCoeff: $sBco * math.pow(math.div($b, 255), $mainTRC);
+	$r-coeff: $sr-co * math.pow(math.div($r, 255), $main-trc);
+	$g-coeff: $sg-co * math.pow(math.div($g, 255), $main-trc);
+	$b-coeff: $sb-co * math.pow(math.div($b, 255), $main-trc);
 
-	@return $rCoeff + $gCoeff + $bCoeff;
+	@return $r-coeff + $g-coeff + $b-coeff;
 }
 
-@function APCAcontrast($txtY, $bgY) {
-	$SAPC: 0;
-	$outputContrast: 0;
+@function apca-contrast($txt-y, $bg-y) {
+	$sapc: 0;
+	$output-contrast: 0;
 
-	@if ($txtY <= $blkThrs) {
-		$txtY: $txtY + math.pow($blkThrs - $txtY, $blkClmp);
+	@if ($txt-y <= $blk-thrs) {
+		$txt-y: $txt-y + math.pow($blk-thrs - $txt-y, $blk-clmp);
 	}
 
-	@if ($bgY <= $blkThrs) {
-		$bgY: $bgY + math.pow($blkThrs - $bgY, $blkClmp);
+	@if ($bg-y <= $blk-thrs) {
+		$bg-y: $bg-y + math.pow($blk-thrs - $bg-y, $blk-clmp);
 	}
 
-	@if (math.abs($bgY - $txtY) < $deltaYmin) {
+	@if (math.abs($bg-y - $txt-y) < $delta-y-min) {
 		@return 0;
 	}
 
-	@if ($bgY > $txtY) {
-		$SAPC: (math.pow($bgY, $normBG) - math.pow($txtY, $normTXT)) * $scaleBoW;
+	@if ($bg-y > $txt-y) {
+		$sapc: (math.pow($bg-y, $norm-bg) - math.pow($txt-y, $norm-txt)) * $scale-bow;
 
-		@if ($SAPC < $loClip) {
-			$outputContrast: 0;
-		} @else if ($SAPC < $loBoWthresh) {
-			$outputContrast: $SAPC - $SAPC * $loBoWfactor * $loBoWoffset;
+		@if ($sapc < $lo-clip) {
+			$output-contrast: 0;
+		} @else if ($sapc < $lo-bow-thresh) {
+			$output-contrast: $sapc - $sapc * $lo-bow-factor * $lo-bow-offset;
 		} @else {
-			$outputContrast: $SAPC - $loBoWoffset;
+			$output-contrast: $sapc - $lo-bow-offset;
 		}
 	} @else {
-		$SAPC: (math.pow($bgY, $revBG) - math.pow($txtY, $revTXT)) * $scaleWoB;
+		$sapc: (math.pow($bg-y, $rev-bg) - math.pow($txt-y, $rev-txt)) * $scale-wob;
 
-		@if ($SAPC > -$loClip) {
-			$outputContrast: 0;
-		} @else if ($SAPC > -$loWoBthresh) {
-			$outputContrast: $SAPC - $SAPC * $loWoBfactor * $loWoBoffset;
+		@if ($sapc > -$lo-clip) {
+			$output-contrast: 0;
+		} @else if ($sapc > -$lo-wob-thresh) {
+			$output-contrast: $sapc - $sapc * $lo-bow-factor * $lo-wob-offset;
 		} @else {
-			$outputContrast: $SAPC + $loWoBoffset;
+			$output-contrast: $sapc + $lo-wob-offset;
 		}
 	}
 
-	@return $outputContrast * 100;
+	@return $output-contrast * 100;
 }

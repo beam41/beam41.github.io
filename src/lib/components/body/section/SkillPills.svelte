@@ -18,9 +18,9 @@
 	@use '../../../assets/styles/apca';
 
 	@mixin gen-color-background($bg-color) {
-		$bg-color-y: apca.sRGBtoY($bg-color);
-		$black-text-contrast: apca.APCAcontrast(apca.sRGBtoY(black), $bg-color-y);
-		$white-text-contrast: apca.APCAcontrast(apca.sRGBtoY(white), $bg-color-y);
+		$bg-color-y: apca.srgb-to-y($bg-color);
+		$black-text-contrast: apca.apca-contrast(apca.srgb-to-y(black), $bg-color-y);
+		$white-text-contrast: apca.apca-contrast(apca.srgb-to-y(white), $bg-color-y);
 		@if (math.abs($black-text-contrast) > math.abs($white-text-contrast)) {
 			background: $bg-color;
 			color: black;
