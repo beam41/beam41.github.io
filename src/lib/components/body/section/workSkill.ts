@@ -20,7 +20,6 @@ export type SkillsFramework =
 	| 'angular'
 	| 'vue'
 	| 'svelte'
-	| 'solid'
 	| 'express'
 	| 'graphql'
 	| 'adonis'
@@ -54,7 +53,6 @@ export const SkillsName = {
 	angular: 'Angular',
 	vue: 'Vue.js',
 	svelte: 'Svelte',
-	solid: 'Solid.js',
 	express: 'Express.js',
 	graphql: 'GraphQL',
 	adonis: 'AdonisJS',
@@ -94,7 +92,7 @@ export const works: readonly WorkPlace[] = [
 			},
 		],
 		skillsLang: ['js', 'html', 'css', 'scss'],
-		skillsFramework: ['react', 'svelte', 'solid', 'docker'],
+		skillsFramework: ['react', 'svelte', 'docker'],
 	},
 	{
 		place: 'Manao Software',

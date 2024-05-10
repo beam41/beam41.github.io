@@ -123,10 +123,6 @@
 					@include gen-color-background(#ff3e00);
 				}
 
-				&.solid {
-					@include gen-color-background(#2c4f7c);
-				}
-
 				&.express {
 					@extend %no-color;
 				}
