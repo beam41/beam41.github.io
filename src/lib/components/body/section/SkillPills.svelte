@@ -31,7 +31,7 @@
 	}
 
 	%no-color {
-		@include gen-color-background(color.invert(rgb(240, 240, 240)));
+		@include gen-color-background(color.invert(mix(black, white, 5%)));
 	}
 
 	.skills {
@@ -49,7 +49,7 @@
 			margin: 4px 4px;
 			padding: 4px 18px;
 			border-radius: 100px;
-			background: rgb(240, 240, 240);
+			background: mix(black, white, 5%);
 			transition: background 250ms ease-in-out;
 
 			&:hover {

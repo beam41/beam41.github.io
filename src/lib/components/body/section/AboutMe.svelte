@@ -93,27 +93,27 @@
 			}
 
 			&.em {
-				background: rgba(black, 0.05);
+				background: mix(black, white, 5%);
 			}
 
 			&.li {
-				background: rgba(rgb(0, 119, 183), 0.05);
+				background: mix(rgb(0, 119, 183), white, 5%);
 				&:hover {
-					background: rgba(rgb(0, 119, 183), 1);
+					background: rgb(0, 119, 183);
 				}
 			}
 
 			&.gh {
-				background: rgba(rgb(20, 25, 30), 0.05);
+				background: mix(rgb(20, 25, 30), white, 5%);
 				&:hover {
-					background: rgba(rgb(20, 25, 30), 1);
+					background: rgb(20, 25, 30);
 				}
 			}
 
 			&.gl {
-				background: rgba(#f96424, 0.05);
+				background: mix(#f96424, white, 5%);
 				&:hover {
-					background: rgba(#f96424, 1);
+					background: #f96424;
 				}
 			}
 		}
