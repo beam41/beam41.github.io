@@ -85,6 +85,13 @@
 			transition: background 250ms ease-in-out;
 			font-size: 0.9em;
 
+			:global(svg) {
+				width: 24px;
+				height: 24px;
+				margin-top: -2px;
+				margin-right: 4px;
+			}
+
 			&.em {
 				background: rgba(black, 0.05);
 			}
@@ -108,12 +115,6 @@
 				&:hover {
 					background: rgba(#f96424, 1);
 				}
-			}
-			:global(svg) {
-				width: 24px;
-				height: 24px;
-				margin-top: -2px;
-				margin-right: 4px;
 			}
 		}
 
