@@ -127,14 +127,16 @@
 				gl.uniform2f(resolutionHandle, canvas.width, canvas.height);
 			};
 
+			let updateFrame = true;
 			const run = (timestamp: number) => {
-				if (onScreen) {
+				if (onScreen && updateFrame) {
 					const rotateY = pingpongLoop(-0.5, 0.5, 0, 40000, 0, timestamp, easeInOutSine);
 					gl.uniform1f(rotateYValueHandle, rotateY);
 
 					gl.uniform2f(rotateCameraHandle, mousePosNormX, mousePosNormY);
 					gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 				}
+				updateFrame = !updateFrame;
 
 				runId = requestAnimationFrame(run);
 			};

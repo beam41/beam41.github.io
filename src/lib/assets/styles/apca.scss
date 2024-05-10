@@ -1,0 +1,80 @@
+@use 'sass:color';
+@use 'sass:math';
+
+// APCA - Advanced Perceptual Contrast Algorithm - Beta 0.98G-4g
+$mainTRC: 2.4;
+
+$sRco: 0.2126729;
+$sGco: 0.7151522;
+$sBco: 0.072175;
+
+$normBG: 0.56;
+$normTXT: 0.57;
+$revTXT: 0.62;
+$revBG: 0.65;
+
+$blkThrs: 0.022;
+$blkClmp: 1.414;
+$scaleBoW: 1.14;
+$scaleWoB: 1.14;
+$loBoWthresh: 0.035991;
+$loWoBthresh: 0.035991;
+$loBoWfactor: 27.7847239587675;
+$loWoBfactor: 27.7847239587675;
+$loBoWoffset: 0.027;
+$loWoBoffset: 0.027;
+$loClip: 0.001;
+$deltaYmin: 0.0005;
+
+@function sRGBtoY($sRGBcolor) {
+	$r: color.red($sRGBcolor);
+	$g: color.green($sRGBcolor);
+	$b: color.blue($sRGBcolor);
+
+	$rCoeff: $sRco * math.pow(math.div($r, 255), $mainTRC);
+	$gCoeff: $sGco * math.pow(math.div($g, 255), $mainTRC);
+	$bCoeff: $sBco * math.pow(math.div($b, 255), $mainTRC);
+
+	@return $rCoeff + $gCoeff + $bCoeff;
+}
+
+@function APCAcontrast($txtY, $bgY) {
+	$SAPC: 0;
+	$outputContrast: 0;
+
+	@if ($txtY <= $blkThrs) {
+		$txtY: $txtY + math.pow($blkThrs - $txtY, $blkClmp);
+	}
+
+	@if ($bgY <= $blkThrs) {
+		$bgY: $bgY + math.pow($blkThrs - $bgY, $blkClmp);
+	}
+
+	@if (math.abs($bgY - $txtY) < $deltaYmin) {
+		@return 0;
+	}
+
+	@if ($bgY > $txtY) {
+		$SAPC: (math.pow($bgY, $normBG) - math.pow($txtY, $normTXT)) * $scaleBoW;
+
+		@if ($SAPC < $loClip) {
+			$outputContrast: 0;
+		} @else if ($SAPC < $loBoWthresh) {
+			$outputContrast: $SAPC - $SAPC * $loBoWfactor * $loBoWoffset;
+		} @else {
+			$outputContrast: $SAPC - $loBoWoffset;
+		}
+	} @else {
+		$SAPC: (math.pow($bgY, $revBG) - math.pow($txtY, $revTXT)) * $scaleWoB;
+
+		@if ($SAPC > -$loClip) {
+			$outputContrast: 0;
+		} @else if ($SAPC > -$loWoBthresh) {
+			$outputContrast: $SAPC - $SAPC * $loWoBfactor * $loWoBoffset;
+		} @else {
+			$outputContrast: $SAPC + $loWoBoffset;
+		}
+	}
+
+	@return $outputContrast * 100;
+}

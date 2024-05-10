@@ -1,70 +1,76 @@
 import dayjs from 'dayjs';
 
-type SkillsLang =
-	| 'JavaScript'
-	| 'TypeScript'
-	| 'HTML'
-	| 'CSS'
-	| 'SCSS'
-	| 'C#'
-	| 'SQL'
-	| 'Rust'
-	| 'Go'
-	| 'Python'
-	| 'Dart'
-	| 'C++';
+export type SkillsLang =
+	| 'js'
+	| 'ts'
+	| 'html'
+	| 'css'
+	| 'scss'
+	| 'cs'
+	| 'sql'
+	| 'rust'
+	| 'go'
+	| 'py'
+	| 'dart'
+	| 'cpp';
 
-type SkillsFramework =
-	| 'React'
-	| 'ASP.NET Core'
-	| 'Angular'
-	| 'Vue.js'
-	| 'Svelte'
-	| 'Solid.js'
-	| 'Express.js'
-	| 'GraphQL'
-	| 'AdonisJS'
-	| 'SQL Server'
-	| 'MongoDB'
-	| 'Docker'
-	| 'Flask'
-	| 'OpenCV'
-	| 'Flutter'
-	| 'Unity';
+export type SkillsFramework =
+	| 'react'
+	| 'netcore'
+	| 'angular'
+	| 'vue'
+	| 'svelte'
+	| 'solid'
+	| 'express'
+	| 'graphql'
+	| 'adonis'
+	| 'sqlserver'
+	| 'mongo'
+	| 'docker'
+	| 'flask'
+	| 'opencv'
+	| 'flutter'
+	| 'unity'
+	| 'gin'
+	| 'actix';
 
-const SkillColorClasses = {
-	JavaScript: 'js',
-	TypeScript: 'ts',
-	HTML: 'html',
-	CSS: 'css',
-	SCSS: 'scss',
-	'C#': 'cs',
-	SQL: 'sql',
-	Rust: 'rust',
-	Go: 'go',
-	Python: 'py',
-	Dart: 'dart',
-	'C++': 'cpp',
-	React: 'react',
-	'ASP.NET Core': 'netcore',
-	Angular: 'angular',
-	'Vue.js': 'vue',
-	Svelte: 'svelte',
-	'Solid.js': 'solid',
-	'Express.js': 'express',
-	GraphQL: 'graphql',
-	AdonisJS: 'adonis',
-	'SQL Server': 'sqlserver',
-	MongoDB: 'mongo',
-	Docker: 'docker',
-	Flask: 'flask',
-	OpenCV: 'opencv',
-	Flutter: 'flutter',
-	Unity: 'unity',
-} as const satisfies Record<SkillsLang | SkillsFramework, string>;
+export type Skils = SkillsLang | SkillsFramework;
 
-type WorkType = 'Full-time' | 'Intern';
-type Title = {
+export const SkillsName = {
+	js: 'JavaScript',
+	ts: 'TypeScript',
+	html: 'HTML',
+	css: 'CSS',
+	scss: 'SCSS',
+	cs: 'C#',
+	sql: 'SQL',
+	rust: 'Rust',
+	go: 'Go',
+	py: 'Python',
+	dart: 'Dart',
+	cpp: 'C++',
+	react: 'React',
+	netcore: 'ASP.NET Core',
+	angular: 'Angular',
+	vue: 'Vue.js',
+	svelte: 'Svelte',
+	solid: 'Solid.js',
+	express: 'Express.js',
+	graphql: 'GraphQL',
+	adonis: 'AdonisJS',
+	sqlserver: 'SQL Server',
+	mongo: 'MongoDB',
+	docker: 'Docker',
+	flask: 'Flask',
+	opencv: 'OpenCV',
+	flutter: 'Flutter',
+	unity: 'Unity',
+	gin: 'Gin Web Framework',
+	actix: 'Actix Web',
+} as const satisfies Record<Skils, string>;
+
+export type WorkType = 'Full-time' | 'Intern';
+export type Title = {
 	readonly name: string;
 	readonly type: WorkType;
 	readonly start: dayjs.Dayjs;
@@ -87,8 +93,8 @@ export const works: readonly WorkPlace[] = [
 				start: dayjs('2023-09'),
 			},
 		],
-		skillsLang: ['JavaScript', 'HTML', 'CSS', 'SCSS'],
-		skillsFramework: ['React', 'Svelte', 'Solid.js', 'Docker'],
+		skillsLang: ['js', 'html', 'css', 'scss'],
+		skillsFramework: ['react', 'svelte', 'solid', 'docker'],
 	},
 	{
 		place: 'Manao Software',
@@ -106,16 +112,16 @@ export const works: readonly WorkPlace[] = [
 				end: dayjs('2022-03'),
 			},
 		],
-		skillsLang: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'SCSS', 'C#'],
+		skillsLang: ['js', 'ts', 'html', 'css', 'scss', 'cs'],
 		skillsFramework: [
-			'React',
-			'Angular',
-			'ASP.NET Core',
-			'AdonisJS',
-			'SQL Server',
-			'MongoDB',
-			'Docker',
-			'Express.js',
+			'react',
+			'angular',
+			'netcore',
+			'adonis',
+			'sqlserver',
+			'mongo',
+			'docker',
+			'express',
 		],
 	},
 	{
@@ -128,14 +134,21 @@ export const works: readonly WorkPlace[] = [
 				end: dayjs('2021-10'),
 			},
 		],
-		skillsLang: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'SCSS'],
-		skillsFramework: ['Vue.js', 'Docker', 'GraphQL'],
+		skillsLang: ['js', 'ts', 'html', 'css', 'scss'],
+		skillsFramework: ['vue', 'docker', 'graphql'],
 	},
 ];
 
-const othersSkillsLang = ['Rust', 'Go', 'Python', 'Dart', 'C++'] as readonly SkillsLang[];
+const othersSkillsLang = ['rust', 'go', 'py', 'dart', 'cpp'] as readonly SkillsLang[];
 
-const othersSkillsFramework = ['Flask', 'OpenCV', 'Flutter', 'Unity'] as readonly SkillsFramework[];
+const othersSkillsFramework = [
+	'flask',
+	'opencv',
+	'flutter',
+	'unity',
+	'gin',
+	'actix',
+] as readonly SkillsFramework[];
 
 // ensure no duplicate
 const productionSkillsLangSet = new Set(works.map((wp) => wp.skillsLang).flat()) as Readonly<

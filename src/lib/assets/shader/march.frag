@@ -22,11 +22,7 @@ uniform sampler2D nameTexture;
 #define AA (1)
 #define MAX_STEPS (128)
 #else
-#ifndef HI_DPI
-#define AA (3)
-#else
 #define AA (2)
-#endif
 #define MAX_STEPS (256)
 #endif
 
