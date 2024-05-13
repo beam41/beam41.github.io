@@ -5,14 +5,17 @@
 	import SvgGitlab from '$lib/components/svg/Gitlab.svelte';
 	import type { ComponentType } from 'svelte';
 
+	const myInfo =
+		'My name is Phumdol Lookthipnapha, a software engineer based in Chiang Mai, Thailand. I have experience in full-stack web development.';
+
 	type Contact = {
-		className: string;
-		icon: ComponentType;
-		link?: string;
-		text: string;
+		readonly className: string;
+		readonly icon: ComponentType;
+		readonly link?: string;
+		readonly text: string;
 	};
 
-	const contactList: Contact[] = [
+	const contactList: readonly Contact[] = [
 		{
 			className: 'em',
 			icon: SvgEmail,
@@ -39,12 +42,9 @@
 	];
 </script>
 
-<p class="about">
-	My name is Phumdol Lookthipnapha, a software engineer based in Chiang Mai, Thailand. I have
-	experience in full-stack web development.
-</p>
+<p class="about">{myInfo}</p>
 <div class="contact">
-	{#each contactList as contact}
+	{#each contactList as contact (contact.className)}
 		<svelte:element
 			this={contact.link ? 'a' : 'div'}
 			class={contact.className}

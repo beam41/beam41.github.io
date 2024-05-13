@@ -4,8 +4,8 @@
 	export let title: string;
 
 	let contentObserver: Element;
-	let visible = false;
-	let overrideVisible = false;
+	let visible = true;
+	let overrideVisible = true;
 
 	onMount(() => {
 		let observer = new IntersectionObserver(

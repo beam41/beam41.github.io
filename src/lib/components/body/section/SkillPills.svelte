@@ -1,13 +1,13 @@
 <script lang="ts">
 	import clsx from 'clsx';
 	import { SkillsName, type Skils } from '$lib/components/body/section/workSkill';
-	export let small: boolean | undefined = undefined;
 
-	export let skills: readonly Skils[];
+	export let small: boolean | undefined = undefined;
+	export let skills: readonly Skils[] = [];
 </script>
 
 <div class={clsx('skills', { skillsSmall: small })}>
-	{#each skills as skill}
+	{#each skills as skill (skill)}
 		<span class={clsx('skillPill', skill)}>{SkillsName[skill]}</span>
 	{/each}
 </div>

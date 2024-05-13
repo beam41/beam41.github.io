@@ -8,7 +8,7 @@
 		readonly desc: string;
 	};
 
-	const educations: EduInfo[] = [
+	const educations: readonly EduInfo[] = [
 		{
 			name: 'Chiang Mai University',
 			degree: 'Bachelor of Science (Computer Science), English Minor',
@@ -20,7 +20,7 @@
 	];
 </script>
 
-{#each educations as ed}
+{#each educations as ed (ed.name)}
 	<div class="educationItem">
 		<h2 class="info uni">{ed.name}</h2>
 		<h3 class="info degree">{ed.degree}</h3>

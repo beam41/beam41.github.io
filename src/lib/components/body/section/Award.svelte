@@ -8,7 +8,7 @@
 		readonly link?: string;
 	};
 
-	const awards: Award[] = [
+	const awards: readonly Award[] = [
 		{
 			name: 'Career Essentials in Software Development by Microsoft and LinkedIn',
 			date: dayjs('2022-12'),
@@ -33,7 +33,7 @@
 </script>
 
 <div class="awardWrapper">
-	{#each awards as award}
+	{#each awards as award (award.name)}
 		<div class="awardItem">
 			<h2 class="award">
 				<svelte:element
