@@ -3,7 +3,6 @@ export function compileShader(
 	shaderSource: string,
 	shaderType: WebGLRenderingContext['FRAGMENT_SHADER'] | WebGLRenderingContext['VERTEX_SHADER'],
 	mobileFlag = false,
-	hiDPIFlag = false,
 ) {
 	const shader = gl.createShader(shaderType);
 
@@ -12,10 +11,7 @@ export function compileShader(
 		throw new Error('Cannot create shader');
 	}
 
-	gl.shaderSource(
-		shader,
-		(mobileFlag ? '#define MOBILE\n' : '') + (hiDPIFlag ? '#define HI_DPI\n' : '') + shaderSource,
-	);
+	gl.shaderSource(shader, (mobileFlag ? '#define MOBILE\n' : '') + shaderSource);
 	gl.compileShader(shader);
 
 	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {

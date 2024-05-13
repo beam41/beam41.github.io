@@ -1,7 +1,12 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import glsl from 'vite-plugin-glsl';
+import minGlsl from './plugins/minGlsl';
 
 export default defineConfig({
-	plugins: [sveltekit(), glsl({ compress: true })],
+	plugins: [
+		sveltekit(),
+		minGlsl({
+			noRenaming: process.env.NODE_ENV === 'development',
+		}),
+	],
 });

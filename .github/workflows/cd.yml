@@ -7,11 +7,7 @@ on:
 
 jobs:
   cd:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout 🛎
@@ -31,6 +27,12 @@ jobs:
 
       - name: Svelte check 🟠
         run: npm run check
+
+      - name: Install mono 🪟
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: mono-runtime
+          version: 1.0
 
       - name: Generate 📝
         run: npm run build
