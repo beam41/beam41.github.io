@@ -163,20 +163,9 @@
 </header>
 
 <style lang="scss">
+	@use './shared';
+
 	.header {
-		width: 100%;
-		height: 100vh;
-		user-select: none;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		& > svg {
-			width: 80%;
-
-			text {
-				font-weight: bold;
-			}
-		}
+		@extend %header-svg;
 	}
 </style>

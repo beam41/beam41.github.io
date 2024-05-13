@@ -1,0 +1,21 @@
+%header {
+	width: 100%;
+	height: 100vh;
+	height: 100svh;
+	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+%header-svg {
+	@extend %header;
+
+	& > svg {
+		width: 80%;
+
+		text {
+			font-weight: bold;
+		}
+	}
+}

@@ -197,11 +197,11 @@
 <canvas bind:this={canvas} class="logo" />
 
 <style lang="scss">
+	@use './shared';
+
 	.logo,
 	.measureScreen {
-		width: 100%;
-		height: 100vh;
-		height: 100svh;
+		@extend %header;
 	}
 
 	.measureScreen {

@@ -1,23 +1,28 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import HeaderSvg from '$lib/components/header/HeaderSvg.svelte';
-	import Header3D from '$lib/components/header/Header3D.svelte';
+	import HeaderPlain from '$lib/components/header/HeaderPlain.svelte';
 
-	let use3dHeader = true;
+	let lazyHeader: Promise<typeof import('./Header3D.svelte') | typeof import('./HeaderSvg.svelte')>;
 
 	onMount(() => {
 		if (!window.WebGLRenderingContext) {
-			use3dHeader = false;
+			useFallback();
+		} else {
+			lazyHeader = import('./Header3D.svelte');
 		}
 	});
 
 	function useFallback() {
-		use3dHeader = false;
+		lazyHeader = import('./HeaderSvg.svelte');
 	}
 </script>
 
-{#if use3dHeader}
-	<Header3D on:glFailed={useFallback} />
+{#if lazyHeader}
+	{#await lazyHeader}
+		<HeaderPlain />
+	{:then { default: LazyHeader }}
+		<LazyHeader on:glFailed={useFallback} />
+	{/await}
 {:else}
-	<HeaderSvg />
+	<HeaderPlain />
 {/if}
