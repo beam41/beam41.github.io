@@ -57,7 +57,6 @@
 				RayMarchFragShader,
 				gl.FRAGMENT_SHADER,
 				isMobileAndTablet(),
-				window.devicePixelRatio >= 2,
 			);
 
 			const program = gl.createProgram();
