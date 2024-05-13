@@ -1,0 +1,1 @@
+function a(n,e,t){return n+(e-n)*i(0,1,t)}function f(n,e,t){return i(0,1,(t-n)/(e-n))}function i(n,e,t){return Math.min(Math.max(t,n),e)}function s(n,e,t,o,c,u,r){return m(n,e,0,o,(u-t+c)%o,r)}function m(n,e,t,o,c,u){const r=f(t,t+o,c),p=u((r>.5?1-r:r)*2);return a(n,e,p)}function g(n){return-(Math.cos(Math.PI*n)-1)/2}export{i as c,g as e,s as p};
