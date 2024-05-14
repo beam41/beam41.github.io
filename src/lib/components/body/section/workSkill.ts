@@ -92,7 +92,7 @@ export const works: readonly WorkPlace[] = [
 			},
 		],
 		skillsLang: ['js', 'html', 'css', 'scss'],
-		skillsFramework: ['react', 'svelte', 'docker'],
+		skillsFramework: ['react', 'svelte', 'docker', 'angular'],
 	},
 	{
 		place: 'Manao Software',
