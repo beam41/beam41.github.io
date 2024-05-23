@@ -6,7 +6,7 @@ export default defineConfig({
 	plugins: [
 		sveltekit(),
 		minGlsl({
-			noRenaming: process.env.NODE_ENV === 'development',
+			noRenaming: true,
 		}),
 	],
 });

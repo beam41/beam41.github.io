@@ -12,4 +12,6 @@ export default function (options?: {
 	exclude?: string[];
 	preserveExternals?: boolean;
 	noRenaming?: boolean;
+	noRenamingList?: string[];
+	noSequence?: boolean;
 }): Plugin;

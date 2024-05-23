@@ -18,9 +18,11 @@ const INCLUDE_DEFAULT = ['**/*.vert', '**/*.frag'];
  */
 export default function minGlsl({
 	include = INCLUDE_DEFAULT,
-	exclude = undefined,
+	exclude,
 	preserveExternals = true,
 	noRenaming = false,
+	noRenamingList,
+	noSequence = true,
 } = {}) {
 	const isWindows = os.platform() === 'win32';
 	const filter = createFilter(include, exclude);
@@ -44,6 +46,14 @@ export default function minGlsl({
 
 			if (noRenaming) {
 				command.push('--no-renaming');
+			}
+
+			if (noRenamingList) {
+				command.push(`--no-renaming-list ${noRenamingList.join(',')}`);
+			}
+
+			if (noSequence) {
+				command.push('--no-sequence');
 			}
 
 			const { stdout } = await exec(command.join(' '));
