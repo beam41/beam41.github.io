@@ -1,7 +1,10 @@
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 import { transformWithEsbuild } from 'vite';
 import mime from 'mime';
 
+/**
+ * @returns {import('vite').Plugin}
+ */
 export default function hexLoader() {
 	return {
 		name: 'hex-loader',

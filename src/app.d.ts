@@ -7,6 +7,11 @@ declare global {
 		// interface PageData {}
 		// interface Platform {}
 	}
+
+	declare module '*?raw-hex' {
+		const src: string;
+		export default src;
+	}
 }
 
 export {};
