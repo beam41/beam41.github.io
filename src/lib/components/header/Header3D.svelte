@@ -2,7 +2,7 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import MainVertShader from '$lib/assets/shader/main.vert';
 	import RayMarchFragShader from '$lib/assets/shader/march.frag';
-	import NameImg from '$lib/assets/image/name.png';
+	import NameImg from '$lib/assets/image/name.png?raw-hex';
 	import { compileShader, getAttribLocation, getUniformLocation } from '$lib/utils/shader';
 	import { clamp } from '$lib/utils/number';
 	import { debounce } from '$lib/utils/debounce';
