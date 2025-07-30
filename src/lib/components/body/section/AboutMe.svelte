@@ -19,7 +19,7 @@
 		{
 			className: 'em',
 			icon: SvgEmail,
-			text: 'phumdol@pm.me',
+			text: 'phumdol.backlit792@passmail.net',
 		},
 		{
 			className: 'li',
